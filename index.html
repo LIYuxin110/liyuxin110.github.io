@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 网站标题 -->
-    <title>禹鋅的个人网站</title>
+    <title>liyuxin110</title>
     <style>
         * {
             margin: 0;
@@ -12,58 +11,78 @@
             box-sizing: border-box;
         }
         body {
-            font-family: "Microsoft Yahei", sans-serif;
-            background-color: #f4f7fa;
-            color: #333;
+            font-family: "Microsoft Yahei", "PingFang SC", sans-serif;
+            /*商务背景：浅灰低饱和背景*/
+            background-color: #E8EDF2;
+            background-image: linear-gradient(rgba(255,255,255,0.35), rgba(232, 237, 242, 0.85));
+            color: #1F2937;
         }
         header {
-            background: #243b55;
-            color: white;
-            padding: 2rem;
+            background-color: #0F2B48;
+            background-image: linear-gradient(135deg,#0F2B48,#1A3E66);
+            color: #ffffff;
+            padding: 3rem 1rem;
             text-align: center;
         }
-        nav {
-            background: #1a2940;
-            display: flex;
-            justify-content: center;
-            gap: 32px;
-            padding:14px;
+        header h1{
+            font-size:42px;
+            margin-bottom:12px;
         }
-        nav a {
-            color:#fff;
+        header p{
+            font-size:18px;
+            opacity:0.85;
+        }
+        nav {
+            background-color:#143457;
+            display:flex;
+            justify-content:center;
+            flex-wrap:wrap;
+            gap:40px;
+            padding:18px 10px;
+        }
+        nav a{
+            color:#FFFFFF;
             text-decoration:none;
-            font-size:16px;
+            font-size:17px;
+            transition: all 0.3s ease;
         }
         nav a:hover{
-            color:#42a5f5;
+            color:#73B8F0;
         }
         .container{
-            max-width: 1000px;
-            margin:40px auto;
-            padding:0 20px;
+            max-width:1100px;
+            margin:50px auto;
+            padding:0 24px;
         }
         .card{
-            background:#fff;
-            padding:30px;
-            border-radius:12px;
-            box-shadow:0 2px 12px #00000015;
-            margin-bottom:24px;
+            background:#FFFFFF;
+            padding:36px;
+            border-radius:14px;
+            box-shadow:0 4px 18px rgba(15,43,72,0.12);
+            margin-bottom:28px;
+        }
+        .card h2{
+            color:#0F2B48;
+            margin-bottom:16px;
+        }
+        .card h3{
+            color:#143457;
+            margin-bottom:12px;
         }
         footer{
+            background-color:#0F2B48;
+            color:#B8C8D8;
             text-align:center;
-            padding:24px;
-            background:#243b55;
-            color:#cccccc;
-            margin-top:60px;
+            padding:32px;
+            margin-top:80px;
         }
     </style>
 </head>
 <body>
 <header>
-    <h1>我的的个人网站</h1>
-    <p>这里写网站简介【暂无】</p>
+    <h1>liyuxin110</h1>
+    <p>专注技术实践 · 记录学习与项目成长</p>
 </header>
-
 <nav>
     <a href="index.html">首页</a>
     <a href="about.html">关于我</a>
@@ -73,24 +92,22 @@
 
 <div class="container">
     <div class="card">
-        <h2>欢迎来到本站</h2>
-        <br>
-        <p>123456</p>
+        <h2>欢迎访问 liyuxin110</h2>
+        <p style="line-height:1.8;font-size:16px;">
+            这是个人技术展示站点，用于记录编程学习、实践项目与日常思考。在这里可以查看个人介绍、阅读技术随笔，浏览开发项目案例。全站采用商务简约设计，注重清晰排版与阅读体验，导航栏可自由切换各个板块。
+        </p>
     </div>
-
     <div class="card">
-        <h3>快速导航</h3>
-        <ul style="margin:12px 20px;">
-            <li><a href="about.html">个人介绍页面</a></li>
-            <li><a href="blog.html">博客页面</a></li>
-            <li><a href="project.html">项目展示页面</a></li>
+        <h3>站点快速导航</h3>
+        <ul style="margin-left:22px;line-height:2;">
+            <li><a href="about.html" style="color:#25639E;">前往个人介绍页面，了解基础信息</a></li>
+            <li><a href="blog.html" style="color:#25639E;">打开博客，查看技术随笔与感悟</a></li>
+            <li><a href="project.html" style="color:#25639E;">浏览开发项目集合</a></li>
         </ul>
     </div>
 </div>
 
 <footer>
-    <p>© 2026 禹鋅 | 静态网站</p>
+    <p>© 2026 liyuxin110 | All Rights Reserved</p>
 </footer>
-
 </body>
-</html>
