@@ -1,107 +1,50 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>关于我 | liyuxin110</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: "Microsoft Yahei", "PingFang SC", sans-serif;
-            background-color: #E8EDF2;
-            background-image: linear-gradient(rgba(255,255,255,0.35), rgba(232, 237, 242, 0.85));
-            color: #1F2937;
-        }
-        header {
-            background-color: #0F2B48;
-            background-image: linear-gradient(135deg,#0F2B48,#1A3E66);
-            color: #ffffff;
-            padding: 3rem 1rem;
-            text-align: center;
-        }
-        header h1{
-            font-size:42px;
-            margin-bottom:12px;
-        }
-        nav {
-            background-color:#143457;
-            display:flex;
-            justify-content:center;
-            flex-wrap:wrap;
-            gap:40px;
-            padding:18px 10px;
-        }
-        nav a{
-            color:#FFFFFF;
-            text-decoration:none;
-            font-size:17px;
-            transition: all 0.3s ease;
-        }
-        nav a:hover{
-            color:#73B8F0;
-        }
-        .container{
-            max-width:1100px;
-            margin:50px auto;
-            padding:0 24px;
-        }
-        .card{
-            background:#FFFFFF;
-            padding:36px;
-            border-radius:14px;
-            box-shadow:0 4px 18px rgba(15,43,72,0.12);
-            margin-bottom:28px;
-        }
-        .card h2{
-            color:#0F2B48;
-            margin-bottom:16px;
-        }
-        footer{
-            background-color:#0F2B48;
-            color:#B8C8D8;
-            text-align:center;
-            padding:32px;
-            margin-top:80px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>关于我 | liyuxin110</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",sans-serif;}
+body{background:#f3f6fa;background-image:linear-gradient(135deg,#edf2f8 0%,#dbe3ee 100%);color:#2c3e50;min-height:100vh;}
+nav{background:#1f3b5c;box-shadow:0 2px 10px rgba(0,0,0,0.15);padding:0 2rem;}
+.nav-wrap{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:2rem;height:60px;}
+.nav-logo{color:#fff;font-size:1.3rem;font-weight:bold;}
+nav a{color:#cbd5e0;text-decoration:none;padding:0 0.6rem;height:60px;display:flex;align-items:center;transition:0.25s;}
+nav a:hover{color:#ffffff;background:#2c4b70;}
+.container{max-width:900px;margin:3rem auto;padding:0 2rem;}
+.box{background:#fff;border-radius:14px;padding:2.8rem;box-shadow:0 4px 20px rgba(31,59,92,0.12);}
+.box h2{color:#1f3b5c;margin-bottom:1.2rem;font-size:1.8rem;}
+.box p{line-height:1.8;color:#44546b;margin-bottom:1rem;font-size:1.03rem;}
+.back{display:inline-block;margin-top:2rem;text-decoration:none;color:#2b5486;font-weight:500;}
+.back:hover{text-decoration:underline;}
+footer{text-align:center;padding:2rem;color:#64748b;font-size:0.9rem;}
+</style>
 </head>
 <body>
-<header>
-    <h1>关于我</h1>
-</header>
 <nav>
-    <a href="index.html">首页</a>
-    <a href="about.html">关于我</a>
-    <a href="blog.html">博客</a>
-    <a href="project.html">项目</a>
+<div class="nav-wrap">
+<div class="nav-logo">liyuxin110</div>
+<a href="index.html">首页</a>
+<a href="about.html">关于我</a>
+<a href="blog.html">博客</a>
+<a href="c-algo.html">C算法题集</a>
+<a href="tools.html">小工具</a>
+</div>
 </nav>
 
 <div class="container">
-    <div class="card">
-        <h2>个人简介</h2>
-        <p style="line-height:1.8;font-size:16px;">
-我是liyuxin110，一名热爱计算机技术的学习者。平时主要钻研编程算法、网页开发，喜欢动手写代码搭建各类小项目。对待学习严谨务实，愿意不断钻研技术细节，遇到问题习惯独立调试排查。
-<br><br>
-兴趣覆盖算法竞赛、前端网页制作、网络硬件知识。希望通过不断实践积累经验，把想法转化成可以运行的程序。本站用于记录学习路程，沉淀知识，展示自己完成的各类作品。
-        </p>
-    </div>
-    <div class="card">
-        <h2>技能方向</h2>
-        <ul style="margin-left:22px;line-height:2;">
-            <li>C++算法与程序开发</li>
-            <li>HTML网页前端开发</li>
-            <li>计算机网络与硬件学习</li>
-            <li>项目构思与实践调试</li>
-        </ul>
-    </div>
+<div class="box">
+<h2>关于我</h2>
+<p>我是liyuxin110，一名正在学习编程与算法的学习者。主要钻研C语言算法，准备信息学竞赛，同时也会记录各科学习心得。</p>
+<p>平时喜欢研究计算机底层、网络配置，也会看一些历史内容。建立这个网站，目的就是把刷题笔记、随笔、小工具全部整理到一处，方便自己回看，也可以分享给其他人参考。</p>
+<p>本站全部为个人学习用途，内容会持续更新迭代。导航栏所有菜单均可点击，在不同页面之间自由跳转。</p>
+<a class="back" href="index.html">← 返回首页</a>
+</div>
 </div>
 
 <footer>
-    <p>© 2026 liyuxin110 | All Rights Reserved</p>
+liyuxin110 © 2026 | 个人站点
 </footer>
 </body>
 </html>
