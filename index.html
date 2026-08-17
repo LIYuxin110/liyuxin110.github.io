@@ -1,113 +1,112 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh‑CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>liyuxin110</title>
+    <meta charset="UTF‑8">
+    <meta name="viewport" content="width=device‑width, initial‑scale=1.0">
+    <title>我的个人小站</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: "Microsoft Yahei", "PingFang SC", sans-serif;
-            /*商务背景：浅灰低饱和背景*/
-            background-color: #E8EDF2;
-            background-image: linear-gradient(rgba(255,255,255,0.35), rgba(232, 237, 242, 0.85));
-            color: #1F2937;
-        }
-        header {
-            background-color: #0F2B48;
-            background-image: linear-gradient(135deg,#0F2B48,#1A3E66);
-            color: #ffffff;
-            padding: 3rem 1rem;
-            text-align: center;
-        }
-        header h1{
-            font-size:42px;
-            margin-bottom:12px;
-        }
-        header p{
-            font-size:18px;
-            opacity:0.85;
-        }
-        nav {
-            background-color:#143457;
-            display:flex;
-            justify-content:center;
-            flex-wrap:wrap;
-            gap:40px;
-            padding:18px 10px;
-        }
-        nav a{
-            color:#FFFFFF;
-            text-decoration:none;
-            font-size:17px;
-            transition: all 0.3s ease;
-        }
-        nav a:hover{
-            color:#73B8F0;
-        }
-        .container{
-            max-width:1100px;
-            margin:50px auto;
-            padding:0 24px;
-        }
-        .card{
-            background:#FFFFFF;
-            padding:36px;
-            border-radius:14px;
-            box-shadow:0 4px 18px rgba(15,43,72,0.12);
-            margin-bottom:28px;
-        }
-        .card h2{
-            color:#0F2B48;
-            margin-bottom:16px;
-        }
-        .card h3{
-            color:#143457;
-            margin-bottom:12px;
-        }
-        footer{
-            background-color:#0F2B48;
-            color:#B8C8D8;
-            text-align:center;
-            padding:32px;
-            margin-top:80px;
-        }
+        *{box-sizing:border-box;margin:0;padding:0;font-family:"Microsoft Yahei",sans-serif;}
+        body{max-width:1000px;margin: 0 auto;padding:20px;line-height:1.7;color:#222;background:#f8f9fa;}
+        nav{background:#2c3e50;padding:14px 20px;border-radius:8px;margin-bottom:30px;}
+        nav a{color:#fff;text-decoration:none;margin-right:20px;font-size:16px;}
+        nav a:hover{color:#42b983;}
+        .box{background:#fff;padding:24px;border-radius:10px;margin-bottom:24px;box-shadow:0 1px 4px #00000015;}
+        h2{margin-bottom:16px;color:#2c3e50;}
+        /* 技能折叠面板 */
+        .skill-item{border:1px solid #e2e8f0;border-radius:8px;margin-bottom:10px;overflow:hidden;}
+        .skill-title{padding:12px 16px;background:#edf2f7;cursor:pointer;font-weight:bold;user-select:none;}
+        .skill-desc{padding:0 16px;max-height:0;overflow:hidden;transition:all 0.3s ease;}
+        .skill-desc-inner{padding:12px 0;}
+        .skill-item.open .skill-desc{max-height:300px;}
+        /* 博客列表首页预览 */
+        .blog-item-preview{margin:8px 0;}
+        .blog-item-preview a{color:#2b6cb0;text-decoration:none;}
+        .blog-item-preview a:hover{text-decoration:underline;}
+        .date-text{color:#718096;font-size:14px;margin-left:10px;}
+        /* 项目卡片 */
+        .project-card{border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin-bottom:12px;cursor:pointer;transition:0.2s;}
+        .project-card:hover{background:#f7fafc;transform:translateY(-2px);}
+        .project-card a{text-decoration:none;color:#222;display:block;}
+        .more-link{display:inline-block;margin-top:8px;color:#2b6cb0;text-decoration:none;}
+        .more-link:hover{text-decoration:underline;}
     </style>
 </head>
 <body>
-<header>
-    <h1>liyuxin110</h1>
-    <p>专注技术实践 · 记录学习与项目成长</p>
-</header>
-<nav>
-    <a href="index.html">首页</a>
-    <a href="about.html">关于我</a>
-    <a href="blog.html">博客</a>
-    <a href="project.html">项目</a>
-</nav>
+    <nav>
+        <a href="./index.html">🏠首页</a>
+        <a href="./blog.html">📖博客</a>
+    </nav>
 
-<div class="container">
-    <div class="card">
-        <h2>欢迎访问 liyuxin110</h2>
-        <p style="line-height:1.8;font-size:16px;">
-            这是个人技术展示站点，用于记录编程学习、实践项目与日常思考。在这里可以查看个人介绍、阅读技术随笔，浏览开发项目案例。全站采用商务简约设计，注重清晰排版与阅读体验，导航栏可自由切换各个板块。
-        </p>
+    <div class="box">
+        <h1>你好，我是李禹鋅</h1>
+        <p>一名热爱编程的中学生，主要学习C++算法竞赛与前端网页开发。</p>
     </div>
-    <div class="card">
-        <h3>站点快速导航</h3>
-        <ul style="margin-left:22px;line-height:2;">
-            <li><a href="about.html" style="color:#25639E;">前往个人介绍页面，了解基础信息</a></li>
-            <li><a href="blog.html" style="color:#25639E;">打开博客，查看技术随笔与感悟</a></li>
-            <li><a href="project.html" style="color:#25639E;">浏览开发项目集合</a></li>
-        </ul>
-    </div>
-</div>
 
-<footer>
-    <p>© 2026 liyuxin110 | All Rights Reserved</p>
-</footer>
+    <div class="box">
+        <h2>🛠技术技能</h2>
+        <div class="skill-item">
+            <div class="skill-title">前端开发 ▼</div>
+            <div class="skill-desc">
+                <div class="skill-desc-inner">
+                    <p>熟练使用HTML、CSS、原生JavaScript；掌握静态网页布局；熟悉GitHub Pages网站部署；能够独立完成个人静态站点开发。</p>
+                </div>
+            </div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-title">C++ & 算法竞赛 ▼</div>
+            <div class="skill-desc">
+                <div class="skill-desc-inner">
+                    <p>备战CSP‑J/S竞赛；掌握DFS、BFS、贪心、基础动态规划；熟悉图论搜索；日常刷题，调试解决RE、TLE等常见竞赛问题。</p>
+                </div>
+            </div>
+        </div>
+        <div class="skill-item">
+            <div class="skill-title">测试与实测 ▼</div>
+            <div class="skill-desc">
+                <div class="skill-desc-inner">
+                    <p>硬件网络调试、网页排错，会排查页面缓存、部署异常，对设备、网络环境做实际测试验证。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box">
+        <h2>📝博客</h2>
+        <div class="blog-item-preview">
+            <a href="./blog‑github.html">搭建GitHub Pages个人站点踩坑记录</a>
+            <span class="date-text">2026‑08‑17</span>
+        </div>
+        <div class="blog-item-preview">
+            <a href="./blog‑csp.html">CSP‑J刷题心得：搜索DFS的常见坑</a>
+            <span class="date-text">2026‑08‑15</span>
+        </div>
+        <div class="blog-item-preview">
+            <a href="./blog‑htmlnote.html">静态网页入门：HTML基础学习笔记</a>
+            <span class="date-text">2026‑08‑12</span>
+        </div>
+        <a href="./blog.html" class="more-link">查看全部博客 →</a>
+    </div>
+
+    <div class="box">
+        <h2>💻项目展示</h2>
+        <div class="project-card">
+            <a href="./project‑website.html">
+                <h3>个人静态网站</h3>
+                <p>基于GitHub Pages搭建的个人技术主页，纯静态HTML实现。</p>
+            </a>
+        </div>
+    </div>
+
+<script>
+//折叠面板交互
+document.querySelectorAll('.skill-title').forEach(title=>{
+    title.addEventListener('click',function(){
+        this.parentElement.classList.toggle('open');
+        this.textContent = this.parentElement.classList.contains('open')
+            ? this.textContent.replace('▼','▲')
+            : this.textContent.replace('▲','▼');
+    })
+})
+</script>
 </body>
+</html>
