@@ -5,69 +5,113 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>高效刷题的一点感悟 | liyuxin110</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",system-ui,-apple-system,sans-serif;}
-body{
-  min-height:100vh;
-  background: linear-gradient(145deg,#141b29,#1e2b40,#162235);
-  color:#e2e8f0;
-  background-attachment: fixed;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-nav{
-  backdrop-filter: blur(12px);
-  background-color: rgba(22,34,53,0.65);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  padding:0 2rem;
-  position:sticky;
-  top:0;
-  z-index:99;
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Microsoft Yahei", sans-serif;
+  background-color: #0f172a;
+  color: #cbd5e1;
+  line-height: 1.8;
 }
-.nav-wrap{
-  max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:2.4rem;height:64px;
-}
-.nav-logo{color:#ffffff;font-size:1.35rem;font-weight:600;letter-spacing:1px;}
-nav a{color:#b8c2d3;text-decoration:none;padding:0 0.7rem;height:64px;display:flex;align-items:center;transition:0.3s ease;}
-nav a:hover{color:#60a5fa;}
-.container{max-width:860px;margin:4rem auto;padding:0 2rem;}
-.box{
-  background-color:rgba(255,255,255,0.05);
+header {
+  background-color: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(10px);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:18px;
-  padding:3rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
-.box h2{color:#f1f5f9;margin-bottom:0.9rem;font-size:1.9rem;font-weight:600;}
-.time{color:#71829c;font-size:0.9rem;margin-bottom:1.6rem;}
-.box p{line-height:1.8;color:#b8c2d3;margin-bottom:1.1rem;font-size:1.04rem;}
-.back{display:inline-block;margin-top:1.2rem;text-decoration:none;color:#60a5fa;font-weight:500;}
-.back:hover{text-decoration:underline;}
-footer{text-align:center;padding:2.4rem;color:#71829c;font-size:0.9rem;border-top:1px solid rgba(255,255,255,0.06);}
+.nav-container {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.logo {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-right: auto;
+}
+.nav-container a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 15px;
+  transition: 0.25s;
+}
+.nav-container a:hover {
+  color: #38bdf8;
+}
+main {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+.article-wrap {
+  max-width: 720px;
+}
+.article-wrap h2 {
+  font-size: 28px;
+  color: #f1f5f9;
+  margin-bottom: 8px;
+}
+.article-meta {
+  font-size:13px;
+  color:#64748b;
+  margin-bottom:32px;
+}
+.article-wrap p {
+  font-size:16px;
+  margin-bottom:18px;
+  color:#cbd5e1;
+}
+.back-link {
+  display: inline-block;
+  margin-top:28px;
+  color:#38bdf8;
+  text-decoration:none;
+  font-size:15px;
+}
+.back-link:hover {
+  text-decoration:underline;
+}
+footer {
+  max-width:1160px;
+  margin:0 auto;
+  padding:32px 24px;
+  border-top:1px solid #273449;
+  color:#64748b;
+  font-size:14px;
+}
 </style>
 </head>
 <body>
-<nav>
-<div class="nav-wrap">
-<div class="nav-logo">liyuxin110</div>
-<a href="index.html">首页</a>
-<a href="about.html">关于我</a>
-<a href="blog.html">博客</a>
-<a href="c-algo.html">C算法题集</a>
-<a href="tools.html">小工具</a>
+<header>
+  <div class="nav-container">
+    <div class="logo">liyuxin110</div>
+    <a href="index.html">首页</a>
+    <a href="about.html">关于我</a>
+    <a href="blog.html">博客</a>
+    <a href="c-algo.html">C算法题集</a>
+    <a href="tools.html">小工具</a>
+  </div>
+</header>
+<main>
+<div class="article-wrap">
+  <h2>日常随笔：高效刷题的一点感悟</h2>
+  <div class="article-meta">发布时间：2026‑08‑12</div>
+  <p>刷题不要盲目追求题量。不少人刷了大量题目，水平提升却很慢，根源在于缺少复盘环节。</p>
+  <p>做完错题，要理清：错误根源是什么，边界条件有哪些，存在几种可行解法。单纯复制题解，很难真正掌握算法。</p>
+  <p>定期回头重做旧错题，有时候比不停刷新题收益更高。</p>
+  <a href="blog.html" class="back-link">← 返回博客列表</a>
 </div>
-</nav>
-
-<div class="container">
-<div class="box">
-<h2>日常随笔：高效刷题的一点感悟</h2>
-<div class="time">发布时间：2026‑08‑12</div>
-<p>刷题不要追求数量，很多人刷很多题成绩依旧上不去，核心是缺少复盘。</p>
-<p>做错的题，要弄清楚：错在哪、边界是什么、有没有其他解法。单纯复制题解没有提升。定期回看旧错题，比刷新题更加重要。</p>
-<a class="back" href="blog.html">← 返回博客列表</a>
-</div>
-</div>
-
-<footer>
-liyuxin110 © 2026 | 个人站点
-</footer>
+</main>
+<footer>liyuxin110 © 2026</footer>
 </body>
 </html>
