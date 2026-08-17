@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客 | liyuxin110</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Microsoft Yahei", "PingFang SC", sans-serif;
+            background-color: #E8EDF2;
+            background-image: linear-gradient(rgba(255,255,255,0.35), rgba(232, 237, 242, 0.85));
+            color: #1F2937;
+        }
+        header {
+            background-color: #0F2B48;
+            background-image: linear-gradient(135deg,#0F2B48,#1A3E66);
+            color: #ffffff;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        header h1{
+            font-size:42px;
+            margin-bottom:12px;
+        }
+        nav {
+            background-color:#143457;
+            display:flex;
+            justify-content:center;
+            flex-wrap:wrap;
+            gap:40px;
+            padding:18px 10px;
+        }
+        nav a{
+            color:#FFFFFF;
+            text-decoration:none;
+            font-size:17px;
+            transition: all 0.3s ease;
+        }
+        nav a:hover{
+            color:#73B8F0;
+        }
+        .container{
+            max-width:1100px;
+            margin:50px auto;
+            padding:0 24px;
+        }
+        .card{
+            background:#FFFFFF;
+            padding:36px;
+            border-radius:14px;
+            box-shadow:0 4px 18px rgba(15,43,72,0.12);
+            margin-bottom:28px;
+        }
+        .card h2{
+            color:#0F2B48;
+            margin-bottom:16px;
+        }
+        .article-date{
+            color:#64748B;
+            font-size:14px;
+            margin-bottom:12px;
+        }
+        footer{
+            background-color:#0F2B48;
+            color:#B8C8D8;
+            text-align:center;
+            padding:32px;
+            margin-top:80px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>博客</h1>
+</header>
+<nav>
+    <a href="index.html">首页</a>
+    <a href="about.html">关于我</a>
+    <a href="blog.html">博客</a>
+    <a href="project.html">项目</a>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <h2>算法学习心得：调试是编程最重要的能力</h2>
+        <div class="article-date">发布时间：2026‑08‑10</div>
+        <p style="line-height:1.8;">
+写代码出现报错是非常正常的事情。很多时候程序逻辑没有问题，但细节、边界条件会导致Runtime Error。遇到错误不要慌张，学会分步排查，输出中间变量，缩小出错范围，就可以定位问题。持续刷题训练思维，比单纯背诵语法更加关键。
+        </p>
+    </div>
+    <div class="card">
+        <h2>搭建静态网站的一点体会</h2>
+        <div class="article-date">发布时间：2026‑08‑12</div>
+        <p style="line-height:1.8;">
+静态网页不需要后端服务器，只依靠HTML+CSS就可以完成完整站点。统一配色、统一导航是网站美观的关键，所有页面保持风格一致，访问体验会大幅提升。本地写完代码，就可以部署到线上，拥有属于自己的站点。
+        </p>
+    </div>
+    <div class="card">
+        <h2>保持持续学习的状态</h2>
+        <div class="article-date">发布时间：2026‑08‑15</div>
+        <p style="line-height:1.8;">
+技术更新速度很快，不可能一次性学会全部知识。循序渐进，每天完成小目标，积累下来就会有很大进步。遇到难懂知识点，多动手实操，实践永远是最好的学习方式。
+        </p>
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 liyuxin110 | All Rights Reserved</p>
+</footer>
+</body>
+</html>
