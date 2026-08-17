@@ -5,126 +5,202 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>liyuxin110 | 个人站点</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",system-ui,-apple-system,sans-serif;}
-body{
-  min-height:100vh;
-  background: linear-gradient(145deg,#141b29,#1e2b40,#162235);
-  color:#e2e8f0;
-  background-attachment: fixed;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-nav{
-  backdrop-filter: blur(12px);
-  background-color: rgba(22,34,53,0.65);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  padding:0 2rem;
-  position:sticky;
-  top:0;
-  z-index:99;
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Microsoft Yahei", sans-serif;
+  background-color: #0f172a;
+  color: #cbd5e1;
+  line-height: 1.7;
 }
-.nav-wrap{
-  max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:2.4rem;height:64px;
-}
-.nav-logo{color:#ffffff;font-size:1.35rem;font-weight:600;letter-spacing:1px;}
-nav a{color:#b8c2d3;text-decoration:none;padding:0 0.7rem;height:64px;display:flex;align-items:center;transition:0.3s ease;}
-nav a:hover{color:#60a5fa;}
-.container{max-width:1240px;margin:4rem auto;padding:0 2rem;}
-.hero{
-  background-color:rgba(255,255,255,0.05);
+
+/* 导航栏 */
+header {
+  background-color: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(10px);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:18px;
-  padding:4rem 3.2rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
-  margin-bottom:3.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
-.hero h1{
-  font-size:2.6rem;
-  color:#f1f5f9;
-  margin-bottom:1.2rem;
-  font-weight:600;
+.nav-container {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
 }
-.hero p{
-  font-size:1.08rem;
-  color:#b8c2d3;
-  line-height:1.75;
-  max-width:820px;
+.logo {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-right: auto;
 }
-.card-wrap{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:1.8rem;
-  margin-bottom:4rem;
+.nav-container a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 15px;
+  transition: 0.25s;
 }
-.card{
-  background-color:rgba(255,255,255,0.04);
-  backdrop-filter: blur(8px);
-  border:1px solid rgba(255,255,255,0.09);
-  border-radius:16px;
-  padding:2rem;
-  text-decoration:none;
-  color:#e2e8f0;
-  transition:0.32s all ease;
-  box-shadow:0 4px 16px rgba(0,0,0,0.18);
+.nav-container a:hover {
+  color: #38bdf8;
 }
-.card:hover{
-  transform:translateY(-8px);
-  border-color:rgba(96,165,250,0.4);
-  box-shadow:0 12px 36px rgba(59,130,246,0.18);
+
+/* 主体容器 */
+main {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 60px 24px;
 }
-.card h3{
-  color:#e8f0fc;
-  margin-bottom:0.8rem;
-  font-size:1.3rem;
-  font-weight:600;
+
+/* 首页头部区域 */
+.hero {
+  margin-bottom: 64px;
 }
-.card p{
-  color:#a1b2cc;
-  line-height:1.65;
-  font-size:0.98rem;
+.hero h1 {
+  font-size: 36px;
+  color: #f1f5f9;
+  margin-bottom: 16px;
+  font-weight: 600;
 }
-footer{text-align:center;padding:2.4rem;color:#71829c;font-size:0.9rem;border-top:1px solid rgba(255,255,255,0.06);}
+.hero p {
+  font-size: 17px;
+  color: #94a3b8;
+  max-width: 700px;
+}
+
+/* 卡片网格，现代布局 */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+.card {
+  background-color: #1e293b;
+  border-radius: 12px;
+  padding: 28px;
+  border: 1px solid #334155;
+  text-decoration: none;
+  transition: 0.25s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: #38bdf8;
+  background-color: #1e2b42;
+}
+.card h3 {
+  color: #f8fafc;
+  font-size: 19px;
+  margin-bottom: 10px;
+}
+.card p {
+  color: #94a3b8;
+  font-size: 15px;
+}
+
+/* 内页通用内容容器 */
+.page-content {
+  max-width: 720px;
+}
+.page-content h2 {
+  font-size: 28px;
+  color: #f1f5f9;
+  margin-bottom: 20px;
+}
+.page-content p {
+  margin-bottom: 16px;
+  color: #cbd5e1;
+  font-size: 16px;
+}
+.back-link {
+  display: inline-block;
+  margin-top: 24px;
+  color: #38bdf8;
+  text-decoration: none;
+  font-size: 15px;
+}
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* 博客列表 */
+.blog-item {
+  padding: 24px 0;
+  border-bottom: 1px solid #334155;
+}
+.blog-item h3 a {
+  color: #7dd3fc;
+  font-size: 20px;
+  text-decoration: none;
+}
+.blog-item h3 a:hover {
+  text-decoration: underline;
+}
+.blog-item .desc {
+  margin-top: 8px;
+  color: #94a3b8;
+  font-size:15px;
+}
+.blog-item .meta {
+  margin-top:6px;
+  font-size:13px;
+  color:#64748b;
+}
+
+/* 页脚 */
+footer {
+  max-width:1160px;
+  margin:0 auto;
+  padding:32px 24px;
+  border-top:1px solid #273449;
+  color:#64748b;
+  font-size:14px;
+}
 </style>
 </head>
 <body>
-<nav>
-<div class="nav-wrap">
-<div class="nav-logo">liyuxin110</div>
-<a href="index.html">首页</a>
-<a href="about.html">关于我</a>
-<a href="blog.html">博客</a>
-<a href="c-algo.html">C算法题集</a>
-<a href="tools.html">小工具</a>
-</div>
-</nav>
+<header>
+  <div class="nav-container">
+    <div class="logo">liyuxin110</div>
+    <a href="index.html">首页</a>
+    <a href="about.html">关于我</a>
+    <a href="blog.html">博客</a>
+    <a href="c-algo.html">C算法题集</a>
+    <a href="tools.html">小工具</a>
+  </div>
+</header>
+<main>
+<section class="hero">
+  <h1>欢迎来到 liyuxin110 的个人站点</h1>
+  <p>这里记录信息学竞赛学习笔记、刷题复盘与随笔。点击下方板块，或者顶部导航，在各个页面之间跳转浏览。</p>
+</section>
 
-<div class="container">
-<div class="hero">
-<h1>欢迎来到 liyuxin110 的个人网站</h1>
-<p>这里用来存放学习笔记、算法刷题记录与随笔。所有页面互相连通，点击卡片或者顶部导航即可跳转各个板块。</p>
+<div class="card-grid">
+  <a href="about.html" class="card">
+    <h3>关于我</h3>
+    <p>个人简介、学习方向与目标。</p>
+  </a>
+  <a href="blog.html" class="card">
+    <h3>博客</h3>
+    <p>学习随笔、做题感悟与知识总结。</p>
+  </a>
+  <a href="c-algo.html" class="card">
+    <h3>C算法题集</h3>
+    <p>CSP-J/S模板、习题整理汇总。</p>
+  </a>
+  <a href="tools.html" class="card">
+    <h3>小工具</h3>
+    <p>后续拓展简易实用小功能。</p>
+  </a>
 </div>
-
-<div class="card-wrap">
-<a href="about.html" class="card">
-<h3>关于我</h3>
-<p>个人简单介绍，兴趣方向与学习目标。</p>
-</a>
-<a href="blog.html" class="card">
-<h3>博客｜精彩文章</h3>
-<p>算法学习笔记、刷题感悟、日常随笔。</p>
-</a>
-<a href="c-algo.html" class="card">
-<h3>C算法题集</h3>
-<p>CSP‑J/S竞赛模板、习题整理。</p>
-</a>
-<a href="tools.html" class="card">
-<h3>小工具</h3>
-<p>后续拓展学习小工具。</p>
-</a>
-</div>
-</div>
-
+</main>
 <footer>
-liyuxin110 © 2026 | 个人站点
+liyuxin110 © 2026
 </footer>
 </body>
 </html>
