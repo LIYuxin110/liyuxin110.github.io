@@ -1,104 +1,147 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>管理员后台 | liyuxin110</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Microsoft Yahei",sans-serif;background:#0f172a;color:#cbd5e1;line-height:1.7;}
-header{background:rgba(15,23,42,0.85);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,0.08);position:sticky;top:0;z-index:10;}
-.nav-container{max-width:1160px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:32px;}
-.logo{font-size:18px;font-weight:600;color:#fff;margin-right:auto;}
-.nav-container a{color:#94a3b8;text-decoration:none;font-size:15px;transition:0.25s;}
-.nav-container a:hover{color:#38bdf8;}
-main{max-width:1160px;margin:0 auto;padding:40px 24px;}
-.box{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:28px;margin-bottom:24px;}
-h2{color:#f1f5f9;margin-bottom:16px;}
-.form-item{margin-bottom:18px;}
-label{display:block;font-size:14px;margin-bottom:6px;color:#cbd5e1;}
-input,textarea{width:100%;padding:12px 14px;background:#0f172a;border:1px solid #475569;border-radius:8px;color:#e2e8f0;font-size:15px;outline:none;}
-input:focus,textarea:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,0.14);}
-textarea{min-height:140px;resize:vertical;}
-.btn{padding:12px 20px;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;margin-right:12px;}
-.btn-primary{background:#38bdf8;color:#0f172a;}
-.btn-danger{background:#ef4444;color:white;}
-.toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);padding:12px 22px;border-radius:8px;z-index:999;display:none;}
-.toast.success{background:#10b981;color:white;}
-.toast.error{background:#ef4444;color:white;}
-.no-perm{text-align:center;margin-top:120px;font-size:20px;color:#94a3b8;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理 - 发布博客</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, sans-serif;
+        }
+        body {
+            background-color: #f3f4f6;
+            padding:30px;
+            max-width:900px;
+            margin: 0 auto;
+        }
+        .container{
+            background:#ffffff;
+            padding:32px;
+            border-radius:12px;
+            box-shadow:0 2px 12px #00000014;
+        }
+        h1{
+            margin-bottom:24px;
+            color:#1f2937;
+        }
+        .item{
+            margin-bottom:18px;
+        }
+        label{
+            display:block;
+            margin-bottom:6px;
+            font-weight:500;
+            color:#374151;
+        }
+        input,textarea{
+            width:100%;
+            border:1px solid #d1d5db;
+            border-radius:8px;
+            padding:12px;
+            font-size:15px;
+        }
+        textarea{
+            min-height:220px;
+            resize: vertical;
+        }
+        button{
+            background:#2563eb;
+            color:white;
+            border:none;
+            padding:13px 26px;
+            border-radius:8px;
+            font-size:16px;
+            cursor:pointer;
+        }
+        button:hover{
+            background:#1d4ed8;
+        }
+        #msg{
+            margin-top:16px;
+        }
+        .back{
+            margin-bottom:20px;
+        }
+        .back a{
+            color:#2563eb;
+        }
+    </style>
 </head>
 <body>
-<header>
-  <div class="nav-container">
-    <div class="logo">liyuxin110‑后台</div>
-    <a href="index.html">返回首页</a>
-  </div>
-</header>
-<div class="toast" id="toast"></div>
-<main>
-  <div id="denyView" class="no-perm" style="display:none;">你没有管理员权限，禁止访问</div>
-  <div id="adminView" style="display:none;">
-    <div class="box">
-      <h2>发布新博客文章</h2>
-      <div class="form-item">
+<div class="container">
+    <div class="back"><a href="index.html">← 返回首页</a></div>
+    <h1>博客文章发布后台</h1>
+
+    <div class="item">
         <label>文章标题</label>
-        <input id="artTitle" placeholder="输入文章标题">
-      </div>
-      <div class="form-item">
-        <label>简短描述</label>
-        <input id="artDesc" placeholder="博客列表展示的简短描述">
-      </div>
-      <div class="form-item">
-        <label>正文内容</label>
-        <textarea id="artContent" placeholder="写文章正文"></textarea>
-      </div>
-      <button class="btn btn-primary" id="publishBtn">提交发布</button>
+        <input id="title" placeholder="输入文章标题">
     </div>
-  </div>
-</main>
+
+    <div class="item">
+        <label>简介（article_desc）</label>
+        <input id="article_desc" placeholder="简短文章简介">
+    </div>
+
+    <div class="item">
+        <label>正文内容</label>
+        <textarea id="content" placeholder="写博客正文..."></textarea>
+    </div>
+
+    <button id="submitBtn">提交发布文章</button>
+    <div id="msg"></div>
+</div>
 
 <script type="module">
-import {supabase,isAdminUser} from './supabase-config.js';
-const adminView = document.getElementById("adminView");
-const denyView = document.getElementById("denyView");
-const toast = document.getElementById("toast");
+// 直接引入配置文件，不再写密钥
+import {supabase, isAdminUser} from "./supabase-config.js";
 
-function showToast(msg,isOk){
-  toast.innerText=msg;
-  toast.className="toast "+(isOk?"success":"error");
-  toast.style.display="block";
-  setTimeout(()=>toast.style.display="none",2400);
-}
+document.querySelector("#submitBtn").addEventListener("click", async ()=>{
+    // 校验是否管理员
+    const adminOk = await isAdminUser();
+    if(!adminOk){
+        document.querySelector("#msg").innerText="❌你不是管理员，禁止发布";
+        document.querySelector("#msg").style.color="#dc2626";
+        return;
+    }
 
-(async ()=>{
-  const admin = await isAdminUser();
-  if(!admin){
-    denyView.style.display="block";
-    return;
-  }
-  adminView.style.display="block";
-})();
+    const title = document.querySelector("#title").value.trim();
+    const article_desc = document.querySelector("#article_desc").value.trim();
+    const content = document.querySelector("#content").value.trim();
+    const msgDom = document.querySelector("#msg");
 
-document.getElementById("publishBtn").onclick = async ()=>{
-  const title = document.getElementById("artTitle").value.trim();
-  const desc = document.getElementById("artDesc").value.trim();
-  const content = document.getElementById("artContent").value.trim();
-  if(!title||!content){
-    showToast("标题和正文不能为空",false);
-    return;
-  }
-  const {error} = await supabase.from("articles").insert([{title,desc,content,publish_at:new Date().toISOString()}]);
-  if(error){
-    showToast("发布失败："+error.message,false);
-  }else{
-    showToast("文章发布成功！",true);
-    document.getElementById("artTitle").value="";
-    document.getElementById("artDesc").value="";
-    document.getElementById("artContent").value="";
-  }
-};
+    if(!title || !content){
+        msgDom.innerText = "⚠️标题和正文不能为空";
+        msgDom.style.color="#dc2626";
+        return;
+    }
+
+    msgDom.innerText = "正在提交……";
+    msgDom.style.color="#374151";
+
+    const { error } = await supabase.from("articles").insert([
+        {
+            title: title,
+            article_desc: article_desc,
+            content: content,
+            publish_at: new Date().toISOString()
+        }
+    ]);
+
+    if(error){
+        msgDom.innerText = "❌发布失败："+error.message;
+        msgDom.style.color="#dc2626";
+        console.error(error);
+    }else{
+        msgDom.innerText = "✅文章发布成功！";
+        msgDom.style.color="#16a34a";
+        document.querySelector("#title").value = "";
+        document.querySelector("#article_desc").value = "";
+        document.querySelector("#content").value = "";
+    }
+})
 </script>
 </body>
 </html>
