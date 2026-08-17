@@ -49,8 +49,6 @@ header {
 .nav-container a:hover {
   color:#38bdf8;
 }
-
-/* 登录表单核心，对标京东表单交互 */
 .auth-wrap{
   min-height:calc(100vh - 64px);
   display:flex;
@@ -143,4 +141,145 @@ header {
   background:#0ea5e9;
 }
 .submit-btn:disabled{
-  opacity:0.
+  opacity:0.6;
+  cursor:not-allowed;
+}
+.tip-row{
+  margin-top:20px;
+  text-align:center;
+  font-size:14px;
+  color:#94a3b8;
+}
+.tip-row a{
+  color:#38bdf8;
+  text-decoration:none;
+}
+.toast{
+  position:fixed;
+  top:80px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:12px 24px;
+  border-radius:8px;
+  z-index:999;
+  font-size:15px;
+  display:none;
+}
+.toast.success{
+  background:#10b981;
+  color:white;
+}
+.toast.error{
+  background:#ef4444;
+  color:white;
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav-container">
+    <div class="logo">liyuxin110</div>
+    <a href="index.html">首页</a>
+    <a href="about.html">关于我</a>
+    <a href="blog.html">博客</a>
+    <a href="c-algo.html">C算法题集</a>
+    <a href="tools.html">小工具</a>
+    <a href="login.html">登录</a>
+    <a href="register.html">注册</a>
+  </div>
+</header>
+<div class="toast" id="toast"></div>
+<div class="auth-wrap">
+  <div class="auth-card">
+    <h2>账号登录</h2>
+    <div class="auth-desc">登录你的 liyuxin110 站点账号</div>
+    <form id="loginForm">
+      <div class="form-item" id="itemEmail">
+        <label>邮箱</label>
+        <div class="input-box">
+          <input type="email" id="emailInput" placeholder="请输入邮箱">
+        </div>
+        <div class="error-text" id="errEmail">请输入合法邮箱地址</div>
+      </div>
+      <div class="form-item" id="itemPwd">
+        <label>密码</label>
+        <div class="input-box">
+          <input type="password" id="pwdInput" placeholder="请输入密码">
+          <span class="pwd-toggle" id="togglePwd">显示</span>
+        </div>
+        <div class="error-text" id="errPwd">密码不能为空</div>
+      </div>
+      <button class="submit-btn" id="submitBtn" type="submit">登录</button>
+    </form>
+    <div class="tip-row">
+      没有账号？<a href="register.html">前往注册</a>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import {supabase} from './supabase-config.js';
+
+const form = document.getElementById("loginForm");
+const emailInput = document.getElementById("emailInput");
+const pwdInput = document.getElementById("pwdInput");
+const submitBtn = document.getElementById("submitBtn");
+const togglePwd = document.getElementById("togglePwd");
+const toast = document.getElementById("toast");
+
+// 密码显示隐藏
+togglePwd.onclick = ()=>{
+  if(pwdInput.type === "password"){
+    pwdInput.type = "text";
+    togglePwd.innerText = "隐藏";
+  }else{
+    pwdInput.type = "password";
+    togglePwd.innerText = "显示";
+  }
+};
+
+function showToast(msg,isOk){
+  toast.innerText = msg;
+  toast.className = "toast " + (isOk?"success":"error");
+  toast.style.display = "block";
+  setTimeout(()=>toast.style.display="none",2500);
+}
+
+// 表单提交
+form.onsubmit = async (e)=>{
+  e.preventDefault();
+  let ok = true;
+  document.getElementById("itemEmail").classList.remove("input-error");
+  document.getElementById("itemPwd").classList.remove("input-error");
+
+  const email = emailInput.value.trim();
+  const password = pwdInput.value;
+  const regEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+  if(!regEmail.test(email)){
+    document.getElementById("itemEmail").classList.add("input-error");
+    ok=false;
+  }
+  if(password.length < 8){
+    document.getElementById("itemPwd").classList.add("input-error");
+    ok=false;
+  }
+  if(!ok) return;
+
+  submitBtn.disabled = true;
+  submitBtn.innerText = "登录中…";
+
+  const {error} = await supabase.auth.signInWithPassword({email,password});
+  submitBtn.disabled = false;
+  submitBtn.innerText = "登录";
+
+  if(error){
+    showToast("登录失败："+error.message,false);
+  }else{
+    showToast("登录成功",true);
+    setTimeout(()=>window.location.href="index.html",800);
+  }
+};
+</script>
+</body>
+</html>
