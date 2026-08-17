@@ -1,142 +1,57 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh‑CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF‑8">
+<meta name="viewport" content="width=device‑width, initial‑scale=1.0">
 <title>博客 | liyuxin110</title>
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Microsoft Yahei", sans-serif;
-  background-color: #0f172a;
-  color: #cbd5e1;
-  line-height: 1.7;
-}
-header {
-  background-color: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-.nav-container {
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 0 24px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  gap: 32px;
-}
-.logo {
-  font-size: 18px;
-  font-weight: 600;
-  color: #ffffff;
-  margin-right: auto;
-}
-.nav-container a {
-  color: #94a3b8;
-  text-decoration: none;
-  font-size: 15px;
-  transition: 0.25s;
-}
-.nav-container a:hover {
-  color: #38bdf8;
-}
-main {
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 60px 24px;
-}
-.page-content {
-  max-width:720px;
-}
-.page-content h2 {
-  font-size: 28px;
-  color: #f1f5f9;
-  margin-bottom:28px;
-}
-.blog-item {
-  padding: 24px 0;
-  border-bottom: 1px solid #334155;
-}
-.blog-item h3 a {
-  color: #7dd3fc;
-  font-size: 20px;
-  text-decoration: none;
-}
-.blog-item h3 a:hover {
-  text-decoration: underline;
-}
-.blog-item .desc {
-  margin-top: 8px;
-  color: #94a3b8;
-  font-size:15px;
-}
-.blog-item .meta {
-  margin-top:6px;
-  font-size:13px;
-  color:#64748b;
-}
-.back-link {
-  display: inline-block;
-  margin-top: 24px;
-  color: #38bdf8;
-  text-decoration: none;
-  font-size: 15px;
-}
-.back-link:hover {
-  text-decoration: underline;
-}
-footer {
-  max-width:1160px;
-  margin:0 auto;
-  padding:32px 24px;
-  border-top:1px solid #273449;
-  color:#64748b;
-  font-size:14px;
-}
+*{margin:0;padding:0;box‑sizing:border‑box;font‑family:system‑ui}
+body{background:#f3f4f6;padding:24px;max‑width:920px;margin:0 auto}
+h1{margin‑bottom:24px;color:#111827}
+.blog‑item{background:white;padding:20px;border‑radius:10px;margin‑bottom:16px;box‑shadow:0 1px 8px #00000012}
+.blog‑item h2{margin‑bottom:8px;color:#1f2937}
+.desc{color:#4b5563;margin‑bottom:10px}
+.time{font‑size:13px;color:#6b7280;margin‑bottom:12px}
+.content{line‑height:1.7;color:#222}
+.back{margin‑bottom:20px}
+.back a{color:#2563eb}
 </style>
 </head>
 <body>
-<header>
-  <div class="nav-container">
-    <div class="logo">liyuxin110</div>
-    <a href="index.html">首页</a>
-    <a href="about.html">关于我</a>
-    <a href="blog.html">博客</a>
-    <a href="c-algo.html">C算法题集</a>
-    <a href="tools.html">小工具</a>
-    <a href="login.html">登录</a>
-    <a href="register.html">注册</a>
-  </div>
-</header>
-<main>
-<div class="page-content">
-  <h2>博客文章</h2>
-  <div class="blog-item">
-    <h3><a href="blog-art1.html">CSP‑J备考：二分查找学习总结</a></h3>
-    <div class="desc">整理二分查找模板，边界易错点，几道经典习题的思路梳理。</div>
-    <div class="meta">2026‑08‑17</div>
-  </div>
-  <div class="blog-item">
-    <h3><a href="blog-art2.html">学习笔记：图论BFS基础理解</a></h3>
-    <div class="desc">广度优先搜索概念、队列用法，简单图遍历示例说明。</div>
-    <div class="meta">2026‑08‑15</div>
-  </div>
-  <div class="blog-item">
-    <h3><a href="blog-art3.html">日常随笔：高效刷题的一点感悟</a></h3>
-    <div class="desc">不要只抄题解，重在理解思路，复盘比刷题数量更重要。</div>
-    <div class="meta">2026‑08‑12</div>
-  </div>
-  <a href="index.html" class="back-link">← 返回首页</a>
-</div>
-</main>
-<footer>liyuxin110 © 2026</footer>
+<div class="back"><a href="index.html">← 返回首页</a></div>
+<h1>博客文章列表</h1>
+<div id="blogList"></div>
+
+<script type="module">
+import {supabase} from "./supabase-config.js";
+
+async function loadBlog(){
+    const {data,error}=await supabase
+        .from("articles")
+        .select("*")
+        .order("publish_at",{ascending:false});
+    if(error){
+        document.querySelector("#blogList").innerText="读取博客出错："+error.message;
+        return;
+    }
+    const dom=document.querySelector("#blogList");
+    if(data.length===0){
+        dom.innerText="暂无文章，请前往后台发布第一篇博客";
+        return;
+    }
+    data.forEach(art=>{
+        const div=document.createElement("div");
+        div.className="blog‑item";
+        div.innerHTML=`
+            <h2>${art.title}</h2>
+            <div class="desc">${art.article_desc||""}</div>
+            <div class="time">${new Date(art.publish_at).toLocaleString()}</div>
+            <div class="content">${art.content}</div>
+        `;
+        dom.appendChild(div);
+    })
+}
+loadBlog();
+</script>
 </body>
 </html>
