@@ -5,23 +5,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>博客 | liyuxin110</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",sans-serif;}
-body{background:#f3f6fa;background-image:linear-gradient(135deg,#edf2f8 0%,#dbe3ee 100%);color:#2c3e50;min-height:100vh;}
-nav{background:#1f3b5c;box-shadow:0 2px 10px rgba(0,0,0,0.15);padding:0 2rem;}
-.nav-wrap{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:2rem;height:60px;}
-.nav-logo{color:#fff;font-size:1.3rem;font-weight:bold;}
-nav a{color:#cbd5e0;text-decoration:none;padding:0 0.6rem;height:60px;display:flex;align-items:center;transition:0.25s;}
-nav a:hover{color:#ffffff;background:#2c4b70;}
-.container{max-width:920px;margin:3rem auto;padding:0 2rem;}
-h2{color:#1f3b5c;font-size:1.8rem;margin-bottom:2rem;}
-.blog-item{background:#fff;border-radius:12px;padding:1.6rem;margin-bottom:1.2rem;box-shadow:0 3px 12px rgba(31,59,92,0.09);}
-.blog-item a{text-decoration:none;color:#1f3b5c;font-size:1.2rem;font-weight:500;}
-.blog-item a:hover{color:#2b5486;text-decoration:underline;}
-.blog-item .desc{margin-top:0.6rem;color:#50627c;font-size:0.97rem;line-height:1.6;}
-.blog-item .time{margin-top:0.4rem;font-size:0.88rem;color:#74859e;}
-.back{display:inline-block;margin-top:2rem;text-decoration:none;color:#2b5486;font-weight:500;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",system-ui,-apple-system,sans-serif;}
+body{
+  min-height:100vh;
+  background: linear-gradient(145deg,#141b29,#1e2b40,#162235);
+  color:#e2e8f0;
+  background-attachment: fixed;
+}
+nav{
+  backdrop-filter: blur(12px);
+  background-color: rgba(22,34,53,0.65);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding:0 2rem;
+  position:sticky;
+  top:0;
+  z-index:99;
+}
+.nav-wrap{
+  max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:2.4rem;height:64px;
+}
+.nav-logo{color:#ffffff;font-size:1.35rem;font-weight:600;letter-spacing:1px;}
+nav a{color:#b8c2d3;text-decoration:none;padding:0 0.7rem;height:64px;display:flex;align-items:center;transition:0.3s ease;}
+nav a:hover{color:#60a5fa;}
+.container{max-width:920px;margin:4rem auto;padding:0 2rem;}
+h2{color:#f1f5f9;font-size:1.9rem;margin-bottom:2rem;font-weight:600;}
+.blog-item{
+  background-color:rgba(255,255,255,0.05);
+  backdrop-filter: blur(8px);
+  border:1px solid rgba(255,255,255,0.09);
+  border-radius:16px;
+  padding:1.8rem;
+  margin-bottom:1.4rem;
+  box-shadow:0 4px 16px rgba(0,0,0,0.18);
+  transition:0.3s;
+}
+.blog-item:hover{
+  border-color:rgba(96,165,250,0.35);
+  transform: translateY(-4px);
+  box-shadow:0 10px 30px rgba(59,130,246,0.15);
+}
+.blog-item a{text-decoration:none;color:#93c5fd;font-size:1.22rem;font-weight:500;}
+.blog-item a:hover{color:#60a5fa;text-decoration:underline;}
+.blog-item .desc{margin-top:0.7rem;color:#a1b2cc;font-size:0.98rem;line-height:1.65;}
+.blog-item .time{margin-top:0.5rem;font-size:0.88rem;color:#71829c;}
+.back{display:inline-block;margin-top:2rem;text-decoration:none;color:#60a5fa;font-weight:500;}
 .back:hover{text-decoration:underline;}
-footer{text-align:center;padding:2rem;color:#64748b;font-size:0.9rem;}
+footer{text-align:center;padding:2.4rem;color:#71829c;font-size:0.9rem;border-top:1px solid rgba(255,255,255,0.06);}
 </style>
 </head>
 <body>
