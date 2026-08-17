@@ -1,116 +1,67 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>博客 | liyuxin110</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: "Microsoft Yahei", "PingFang SC", sans-serif;
-            background-color: #E8EDF2;
-            background-image: linear-gradient(rgba(255,255,255,0.35), rgba(232, 237, 242, 0.85));
-            color: #1F2937;
-        }
-        header {
-            background-color: #0F2B48;
-            background-image: linear-gradient(135deg,#0F2B48,#1A3E66);
-            color: #ffffff;
-            padding: 3rem 1rem;
-            text-align: center;
-        }
-        header h1{
-            font-size:42px;
-            margin-bottom:12px;
-        }
-        nav {
-            background-color:#143457;
-            display:flex;
-            justify-content:center;
-            flex-wrap:wrap;
-            gap:40px;
-            padding:18px 10px;
-        }
-        nav a{
-            color:#FFFFFF;
-            text-decoration:none;
-            font-size:17px;
-            transition: all 0.3s ease;
-        }
-        nav a:hover{
-            color:#73B8F0;
-        }
-        .container{
-            max-width:1100px;
-            margin:50px auto;
-            padding:0 24px;
-        }
-        .card{
-            background:#FFFFFF;
-            padding:36px;
-            border-radius:14px;
-            box-shadow:0 4px 18px rgba(15,43,72,0.12);
-            margin-bottom:28px;
-        }
-        .card h2{
-            color:#0F2B48;
-            margin-bottom:16px;
-        }
-        .article-date{
-            color:#64748B;
-            font-size:14px;
-            margin-bottom:12px;
-        }
-        footer{
-            background-color:#0F2B48;
-            color:#B8C8D8;
-            text-align:center;
-            padding:32px;
-            margin-top:80px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>博客 | liyuxin110</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",sans-serif;}
+body{background:#f3f6fa;background-image:linear-gradient(135deg,#edf2f8 0%,#dbe3ee 100%);color:#2c3e50;min-height:100vh;}
+nav{background:#1f3b5c;box-shadow:0 2px 10px rgba(0,0,0,0.15);padding:0 2rem;}
+.nav-wrap{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:2rem;height:60px;}
+.nav-logo{color:#fff;font-size:1.3rem;font-weight:bold;}
+nav a{color:#cbd5e0;text-decoration:none;padding:0 0.6rem;height:60px;display:flex;align-items:center;transition:0.25s;}
+nav a:hover{color:#ffffff;background:#2c4b70;}
+.container{max-width:920px;margin:3rem auto;padding:0 2rem;}
+h2{color:#1f3b5c;font-size:1.8rem;margin-bottom:2rem;}
+.blog-item{background:#fff;border-radius:12px;padding:1.6rem;margin-bottom:1.2rem;box-shadow:0 3px 12px rgba(31,59,92,0.09);}
+.blog-item a{text-decoration:none;color:#1f3b5c;font-size:1.2rem;font-weight:500;}
+.blog-item a:hover{color:#2b5486;text-decoration:underline;}
+.blog-item .desc{margin-top:0.6rem;color:#50627c;font-size:0.97rem;line-height:1.6;}
+.blog-item .time{margin-top:0.4rem;font-size:0.88rem;color:#74859e;}
+.back{display:inline-block;margin-top:2rem;text-decoration:none;color:#2b5486;font-weight:500;}
+.back:hover{text-decoration:underline;}
+footer{text-align:center;padding:2rem;color:#64748b;font-size:0.9rem;}
+</style>
 </head>
 <body>
-<header>
-    <h1>博客</h1>
-</header>
 <nav>
-    <a href="index.html">首页</a>
-    <a href="about.html">关于我</a>
-    <a href="blog.html">博客</a>
-    <a href="project.html">项目</a>
+<div class="nav-wrap">
+<div class="nav-logo">liyuxin110</div>
+<a href="index.html">首页</a>
+<a href="about.html">关于我</a>
+<a href="blog.html">博客</a>
+<a href="c-algo.html">C算法题集</a>
+<a href="tools.html">小工具</a>
+</div>
 </nav>
 
 <div class="container">
-    <div class="card">
-        <h2>算法学习心得：调试是编程最重要的能力</h2>
-        <div class="article-date">发布时间：2026‑08‑10</div>
-        <p style="line-height:1.8;">
-写代码出现报错是非常正常的事情。很多时候程序逻辑没有问题，但细节、边界条件会导致Runtime Error。遇到错误不要慌张，学会分步排查，输出中间变量，缩小出错范围，就可以定位问题。持续刷题训练思维，比单纯背诵语法更加关键。
-        </p>
-    </div>
-    <div class="card">
-        <h2>搭建静态网站的一点体会</h2>
-        <div class="article-date">发布时间：2026‑08‑12</div>
-        <p style="line-height:1.8;">
-静态网页不需要后端服务器，只依靠HTML+CSS就可以完成完整站点。统一配色、统一导航是网站美观的关键，所有页面保持风格一致，访问体验会大幅提升。本地写完代码，就可以部署到线上，拥有属于自己的站点。
-        </p>
-    </div>
-    <div class="card">
-        <h2>保持持续学习的状态</h2>
-        <div class="article-date">发布时间：2026‑08‑15</div>
-        <p style="line-height:1.8;">
-技术更新速度很快，不可能一次性学会全部知识。循序渐进，每天完成小目标，积累下来就会有很大进步。遇到难懂知识点，多动手实操，实践永远是最好的学习方式。
-        </p>
-    </div>
+<h2>博客文章列表</h2>
+
+<div class="blog-item">
+<a href="blog‑art1.html">CSP‑J备考：二分查找学习总结</a>
+<div class="desc">整理二分查找模板，边界易错点，几道经典习题的思路梳理。</div>
+<div class="time">2026‑08‑17</div>
+</div>
+
+<div class="blog-item">
+<a href="blog‑art2.html">学习笔记：图论BFS基础理解</a>
+<div class="desc">广度优先搜索概念、队列用法，简单图遍历示例说明。</div>
+<div class="time">2026‑08‑15</div>
+</div>
+
+<div class="blog-item">
+<a href="blog‑art3.html">日常随笔：高效刷题的一点感悟</a>
+<div class="desc">不要只抄题解，重在理解思路，复盘比刷题数量更重要。</div>
+<div class="time">2026‑08‑12</div>
+</div>
+
+<a class="back" href="index.html">← 返回首页</a>
 </div>
 
 <footer>
-    <p>© 2026 liyuxin110 | All Rights Reserved</p>
+liyuxin110 © 2026 | 个人站点
 </footer>
 </body>
 </html>
