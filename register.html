@@ -1,46 +1,46 @@
 <!DOCTYPE html>
-<html lang="zh‑CN">
+<html lang="zh-CN">
 <head>
-<meta charset="UTF‑8">
-<meta name="viewport" content="width=device‑width, initial‑scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>注册账号</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box‑sizing:border‑box;margin:0;padding:0;font‑family:system‑ui}
-body{background:#f3f4f6;display:flex;align‑items:center;justify‑content:center;height:100vh}
-.box{background:white;padding:32px;border‑radius:10px;width:400px}
-h2{margin‑bottom:24px;text‑align:center}
-input{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border‑radius:6px;font‑size:15px}
-button{width:100%;padding:12px;background:#2563eb;color:white;border:none;border‑radius:6px;margin‑top:8px;font‑size:15px;cursor:pointer}
-.link{text‑align:center;margin‑top:12px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f172a;color:#e2e8f0;display:flex;align-items:center;justify-content:center;height:100vh}
+.box{background:#1e293b;padding:32px;border-radius:10px;width:420px;border:1px solid #334155}
+h2{text-align:center;margin-bottom:24px}
+input{width:100%;padding:12px;margin:8px 0;background:#0f172a;color:#e2e8f0;border:1px solid #475569;border-radius:6px}
+button{width:100%;padding:12px;background:#2563eb;color:white;border:none;border-radius:6px;margin-top:8px;cursor:pointer}
+.link{text-align:center;margin-top:14px}
+.link a{color:#38bdf8;text-decoration:none}
 </style>
 </head>
 <body>
 <div class="box">
-  <h2>新用户注册</h2>
-  <input type="email" id="email" placeholder="邮箱">
-  <input type="password" id="pwd" placeholder="密码，最少6位">
-  <button onclick="doReg()">注册</button>
-  <div id="msg"></div>
-  <div class="link">
-    <a href="login.html">去登录</a>｜<a href="index.html">返回首页</a>
-  </div>
+    <h2>新用户注册</h2>
+    <input type="email" id="email" placeholder="邮箱">
+    <input type="password" id="pwd" placeholder="密码，最少6位">
+    <button onclick="doReg()">注册</button>
+    <div id="msg" style="margin-top:10px;color:#f87171"></div>
+    <div class="link">
+        <a href="login.html">去登录</a>｜<a href="index.html">返回首页</a>
+    </div>
 </div>
-
 <script>
 const SUPABASE_URL = "https://scrmlnmmmixstxcmvcyw.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjcm1sbm1tbWl4c3R4Y212Y3l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5NTgzMTcsImV4cCI6MjEwMjUzNDMxN30.oIZ8OYHpii6SdYy1zTlMAF4MHWfFDOJJDdiJp4luH_s";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 async function doReg(){
-  const email=document.getElementById("email").value.trim();
-  const pwd=document.getElementById("pwd").value;
-  const {error}=await supabase.auth.signUp({email,password:pwd});
-  if(error){
-    document.getElementById("msg").innerText="注册失败："+error.message;
-    return;
-  }
-  document.getElementById("msg").innerText="注册成功，请查收邮箱验证邮件后登录";
+    const email=document.getElementById("email").value.trim();
+    const pwd=document.getElementById("pwd").value;
+    const {error}=await supabase.auth.signUp({email,password:pwd});
+    if(error){
+        document.getElementById("msg").innerText="注册失败："+error.message;
+        return;
+    }
+    document.getElementById("msg").innerText="注册成功，请查收邮箱验证邮件";
 }
 </script>
 </body>
