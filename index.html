@@ -1,33 +1,131 @@
 <!DOCTYPE html>
-<html lang="zh‑CN">
+<html lang="zh-CN">
 <head>
-<meta charset="UTF‑8">
-<meta name="viewport" content="width=device‑width, initial‑scale=1.0">
-<title>我的网站</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-*{box‑sizing:border‑box;margin:0;padding:0;font‑family:system‑ui}
-body{background:#f3f4f6}
-nav{background:#1f2937;color:white;padding:16px 24px;display:flex;gap:16px;align‑items:center}
-nav a{color:white;text‑decoration:none}
-.container{max‑width:1100px;margin:40px auto;padding:0 20px}
-.card{background:white;padding:24px;border‑radius:8px;margin:12px 0}
-button{padding:9px 14px;border:none;border‑radius:6px;cursor:pointer;margin:4px}
-.btn‑blue{background:#2563eb;color:white}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的网站</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Microsoft Yahei", system-ui;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.7;
+        }
+        header {
+            background: #1e293b;
+            padding: 1rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+        nav a {
+            color: #cbd5e1;
+            text-decoration: none;
+            margin: 0 12px;
+        }
+        nav a:hover {
+            color:#38bdf8;
+        }
+        .user-bar{
+            display: inline-flex;
+            gap:10px;
+        }
+        .btn{
+            padding:6px 12px;
+            border-radius:4px;
+            border:none;
+            cursor:pointer;
+        }
+        .btn-blue{
+            background:#2563eb;
+            color:white;
+        }
+        .container{
+            max-width:1200px;
+            margin:40px auto;
+            padding:0 20px;
+        }
+        .hero{
+            text-align:center;
+            padding:60px 20px;
+        }
+        .hero h1{
+            font-size:42px;
+            color:#ffffff;
+            margin-bottom:16px;
+        }
+        .card-wrap{
+            display:grid;
+            grid-template-columns: repeat(auto‑fit, minmax(280px,1fr));
+            gap:24px;
+            margin-top:40px;
+        }
+        .card{
+            background:#1e293b;
+            padding:24px;
+            border-radius:10px;
+            border:1px solid #334155;
+        }
+        .card h3{
+            color:#38bdf8;
+            margin-bottom:10px;
+        }
+    </style>
 </head>
 <body>
-<nav>
-  <h3>我的网站</h3>
-  <a href="index.html">首页</a>
-  <a href="blog.html">博客</a>
-  <div id="navBtn"></div>
-</nav>
+<header>
+    <div class="logo">我的网站</div>
+    <nav>
+        <a href="index.html">首页</a>
+        <a href="about.html">关于我</a>
+        <a href="blog.html">博客</a>
+        <a href="projects.html">项目</a>
+        <a href="c-algorithm.html">C算法题集</a>
+        <a href="tools.html">小工具</a>
+        <span class="user-bar" id="userNav"></span>
+    </nav>
+</header>
 <div class="container">
-<div class="card">
-  <h1>欢迎访问我的网站</h1>
-  <p>这是一套带注册登录、后台管理、博客与评论系统的个人站点。</p>
-</div>
+    <section class="hero">
+        <h1>欢迎来到我的个人站点</h1>
+        <p>商务简约个人网站，博客、项目、算法笔记汇总</p>
+    </section>
+    <div class="card-wrap">
+        <div class="card">
+            <h3>📖博客文章</h3>
+            <p>记录学习心得与日常思考</p>
+            <a href="blog.html">前往博客</a>
+        </div>
+        <div class="card">
+            <h3>💻项目展示</h3>
+            <p>个人练习开发的各类小项目</p>
+            <a href="projects.html">查看项目</a>
+        </div>
+        <div class="card">
+            <h3>🧩C算法题集</h3>
+            <p>CSP竞赛刷题笔记汇总</p>
+            <a href="c-algorithm.html">打开题库</a>
+        </div>
+        <div class="card">
+            <h3>🔧小工具</h3>
+            <p>实用简易工具集合</p>
+            <a href="tools.html">进入工具</a>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -35,24 +133,24 @@ const SUPABASE_URL = "https://scrmlnmmmixstxcmvcyw.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjcm1sbm1tbWl4c3R4Y212Y3l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5NTgzMTcsImV4cCI6MjEwMjUzNDMxN30.oIZ8OYHpii6SdYy1zTlMAF4MHWfFDOJJDdiJp4luH_s";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-async function renderNav(){
-  const {data:{session}} = await supabase.auth.getSession();
-  const dom=document.getElementById("navBtn");
-  if(!session){
-    dom.innerHTML=`<a href="login.html"><button>登录</button></a><a href="register.html"><button>注册</button></a>`;
-  }else{
-    const {data:prof}=await supabase.from("user_profile").select("is_admin").eq("id",session.user.id).single();
-    let html=`<a href="user‑profile.html"><button class="btn‑blue">编辑自我介绍</button></a>`;
-    if(prof?.is_admin) html+=`<a href="admin‑panel.html"><button class="btn‑blue">管理后台</button></a>`;
-    html+=`<button onclick="logout()">退出登录</button>`;
-    dom.innerHTML=html;
-  }
+async function renderUserNav(){
+    const {data:{session}} = await supabase.auth.getSession();
+    const dom = document.getElementById("userNav");
+    if(!session){
+        dom.innerHTML = `<a href="login.html"><button class="btn btn-blue">登录</button></a><a href="register.html"><button class="btn">注册</button></a>`;
+    }else{
+        const {data:prof} = await supabase.from("user_profile").select("is_admin").eq("id",session.user.id).single();
+        let html = `<a href="user-profile.html"><button class="btn">个人资料</button></a>`;
+        if(prof?.is_admin) html += `<a href="admin-panel.html"><button class="btn btn-blue">管理后台</button></a>`;
+        html += `<button class="btn" onclick="logout()">退出</button>`;
+        dom.innerHTML = html;
+    }
 }
 async function logout(){
-  await supabase.auth.signOut();
-  location.reload();
+    await supabase.auth.signOut();
+    location.reload();
 }
-renderNav();
+renderUserNav();
 </script>
 </body>
 </html>
