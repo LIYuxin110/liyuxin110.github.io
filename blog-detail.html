@@ -1,35 +1,33 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh‑CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>博客详情</title>
+<meta charset="UTF‑8">
+<meta name="viewport" content="width=device‑width, initial‑scale=1.0">
+<title>文章详情</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui}
+*{box‑sizing:border‑box;margin:0;padding:0;font‑family:system‑ui}
 body{background:#f3f4f6;padding:22px}
-.container{max-width:850px;margin:0 auto;background:white;padding:30px;border-radius:10px}
-.article-title{font-size:26px;margin-bottom:14px}
-.article-content{line-height:1.7;font-size:16px;margin-bottom:40px;white-space:pre-wrap}
-.comment-area{margin-top:50px;border-top:1px solid #ddd;padding-top:24px}
-.comment-item{padding:14px;border:1px solid #eee;margin:10px 0;border-radius:6px}
-.comment-input textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;min-height:100px}
-button{padding:9px 16px;background:#2563eb;color:white;border:none;border-radius:6px;cursor:pointer;margin-top:8px}
-.back{margin-bottom:20px;display:inline-block}
+.container{max‑width:850px;margin:0 auto;background:white;padding:30px;border‑radius:10px}
+.title{font‑size:26px;margin‑bottom:14px}
+.content{line‑height:1.7;font‑size:16px;margin‑bottom:40px;white‑space:pre‑wrap}
+.comment‑area{margin‑top:50px;border‑top:1px solid #ddd;padding‑top:24px}
+.comment‑item{padding:14px;border:1px solid #eee;margin:10px 0;border‑radius:6px}
+textarea{width:100%;padding:10px;border:1px solid #ccc;border‑radius:6px;min‑height:100px}
+button{padding:9px 16px;background:#2563eb;color:white;border:none;border‑radius:6px;cursor:pointer;margin‑top:8px}
+.back{margin‑bottom:20px;display:inline‑block}
 </style>
 </head>
 <body>
 <div class="container">
 <div class="back"><a href="blog.html">← 返回博客列表</a></div>
-<h1 class="article-title" id="title"></h1>
-<div class="article-content" id="content"></div>
+<h1 class="title" id="title"></h1>
+<div class="content" id="content"></div>
 
-<div class="comment-area">
+<div class="comment‑area">
 <h3>💬讨论区留言</h3>
-<div class="comment-input">
-<textarea id="commentText" placeholder="登录后发表留言"></textarea>
+<textarea id="ctext" placeholder="登录后发表留言"></textarea>
 <button onclick="submitComment()">提交留言</button>
-</div>
 <div id="commentWrap"></div>
 </div>
 </div>
@@ -38,78 +36,52 @@ button{padding:9px 16px;background:#2563eb;color:white;border:none;border-radius
 const SUPABASE_URL = "https://scrmlnmmmixstxcmvcyw.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjcm1sbm1tbWl4c3R4Y212Y3l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5NTgzMTcsImV4cCI6MjEwMjUzNDMxN30.oIZ8OYHpii6SdYy1zTlMAF4MHWfFDOJJDdiJp4luH_s";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let aid,loginUid=null;
 
-let articleId=null;
-let loginUid=null;
-
-function getUrlParam(name){
-  const params=new URLSearchParams(window.location.search);
-  return params.get(name);
+function getParam(k){
+  return new URLSearchParams(location.search).get(k);
 }
 
 async function init(){
-  articleId=getUrlParam("id");
-  if(!articleId){
-    alert("文章不存在");window.location.href="blog.html";
-    return;
-  }
-  const {data:art}=await supabase.from("articles").select("*").eq("id",articleId).single();
-  if(!art){
-    alert("文章不存在");window.location.href="blog.html";
-    return;
-  }
+  aid=getParam("id");
+  if(!aid){location.href="blog.html";return;}
+  const {data:art}=await supabase.from("articles").select("*").eq("id",aid).single();
+  if(!art){location.href="blog.html";return;}
   document.getElementById("title").innerText=art.title;
   document.getElementById("content").innerText=art.content;
-
   const {data:{session}}=await supabase.auth.getSession();
   if(session) loginUid=session.user.id;
   loadComments();
 }
 
 async function loadComments(){
-  const {data}=await supabase.from("comments")
-    .select("*,user_profile(*)")
-    .eq("article_id",articleId)
-    .order("created_at",{asc:false});
+  const {data}=await supabase.from("comments").select("*").eq("article_id",aid).order("created_at",{asc:false});
   const wrap=document.getElementById("commentWrap");
   wrap.innerHTML="";
-  if(!data||data.length===0){
-    wrap.innerHTML="<p>暂无评论，来抢沙发</p>";
-    return;
-  }
+  if(!data||!data.length){wrap.innerHTML="<p>暂无评论</p>";return;}
   data.forEach(c=>{
-    const div=document.createElement("div");
-    div.className="comment-item";
-    div.innerHTML=`
-    <div>用户ID:${c.user_id||"匿名"}｜${new Date(c.created_at).toLocaleString()}</div>
-    <div style="margin-top:6px">${escapeHtml(c.content)}</div>
-    `;
-    wrap.appendChild(div);
+    wrap.innerHTML+=`
+    <div class="comment‑item">
+      <div>用户ID:${c.user_id||"匿名"}｜${new Date(c.created_at).toLocaleString()}</div>
+      <div style="margin‑top:6px">${escapeHtml(c.content)}</div>
+    </div>
+    `
   })
 }
 
 async function submitComment(){
-  if(!loginUid){
-    alert("请登录之后再留言");
-    window.location.href="login.html";
-    return;
-  }
-  const text=document.getElementById("commentText").value.trim();
-  if(!text){alert("留言不能为空");return;}
-  const {error}=await supabase.from("comments").insert({article_id:articleId,user_id:loginUid,content:text});
-  if(error){
-    alert("留言失败："+error.message);
-  }else{
-    document.getElementById("commentText").value="";
-    loadComments();
-  }
+  if(!loginUid){alert("请登录后留言");location.href="login.html";return;}
+  const txt=document.getElementById("ctext").value.trim();
+  if(!txt){alert("内容不能为空");return;}
+  const {error}=await supabase.from("comments").insert({article_id:aid,user_id:loginUid,content:txt});
+  if(error){alert("提交失败："+error.message);return;}
+  document.getElementById("ctext").value="";
+  loadComments();
 }
-
-function escapeHtml(str){
-  if(!str)return "";
-  return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function escapeHtml(s){
+  if(!s)return"";
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 }
-
 init();
 </script>
 </body>
