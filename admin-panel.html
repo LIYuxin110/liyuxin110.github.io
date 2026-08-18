@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>网站管理后台</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui}
+body{background:#f3f4f6;padding:20px}
+.container{max-width:1200px;margin:0 auto}
+.card{background:white;padding:20px;border-radius:8px;margin:14px 0}
+h2{margin-bottom:14px}
+textarea,input{width:100%;padding:10px;margin:6px 0;border:1px solid #ccc;border-radius:6px}
+textarea{min-height:140px}
+button{padding:8px 14px;border:none;border-radius:5px;cursor:pointer;margin:3px}
+.btn-blue{background:#2563eb;color:white}
+.btn-red{background:#dc2626;color:white}
+.tab{display:flex;gap:8px;margin-bottom:16px}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🔧网站管理后台</h1>
+  <div class="tab">
+    <button class="btn-blue" onclick="switchTab('article')">博客文章管理</button>
+    <button class="btn-blue" onclick="switchTab('user')">用户管理(禁言/封号)</button>
+    <button onclick="logout()">退出登录</button>
+  </div>
+
+  <div id="tabArticle" class="card">
+    <h3>发布/编辑博客文章</h3>
+    <input id="artTitle" placeholder="文章标题">
+    <textarea id="artContent" placeholder="文章正文"></textarea>
+    <button class="btn-blue" onclick="saveArticle()">保存文章</button>
+    <div id="artMsg"></div>
+    <hr style="margin:16px 0;">
+    <h4>已有文章列表</h4>
+    <div id="articleList"></div>
+  </div>
+
+  <div id="tabUser" class="card" style="display:none;">
+    <h3>注册用户管理</h3>
+    <div id="userList"></div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://scrmlnmmmixstxcmvcyw.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjcm1sbm1tbWl4c3R4Y212Y3l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5NTgzMTcsImV4cCI6MjEwMjUzNDMxN30.oIZ8OYHpii6SdYy1zTlMAF4MHWfFDOJJDdiJp4luH_s";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let currentTab="article";
+
+async function authCheck(){
+  const {data:{session}}=await supabase.auth.getSession();
+  if(!session){
+    alert("未登录，请前往登录页");
+    window.location.href="login.html";
+    return false;
+  }
+  const {data:profile}=await supabase.from("user_profile").select("is_admin").eq("id",session.user.id).single();
+  if(!profile || !profile.is_admin){
+    alert("你不是管理员，禁止访问后台");
+    await supabase.auth.signOut();
+    window.location.href="index.html";
+    return false;
+  }
+  return true;
+}
+
+function switchTab(tabName){
+  currentTab=tabName;
+  document.getElementById("tabArticle").style.display = tabName==="article"?"block":"none";
+  document.getElementById("tabUser").style.display = tabName==="user"?"block":"none";
+  if(tabName==="article") loadArticles();
+  if(tabName==="user") loadAllUser();
+}
+
+async function saveArticle(){
+  const title=document.getElementById("artTitle").value.trim();
+  const content=document.getElementById("artContent").value.trim();
+  if(!title||!content){
+    document.getElementById("artMsg").innerText="标题和内容不能为空";
+    return;
+  }
+  const {error}=await supabase.from("articles").insert([{title,content}]);
+  if(error){
+    document.getElementById("artMsg").innerText="保存失败:"+error.message;
+  }else{
+    document.getElementById("artMsg").innerText="✅文章发布成功";
+    document.getElementById("artTitle").value="";
+    document.getElementById("artContent").value="";
+    loadArticles();
+  }
+}
+
+async function loadArticles(){
+  const {data}=await supabase.from("articles").select("*").order("id",{asc:false});
+  const wrap=document.getElementById("articleList");
+  wrap.innerHTML="";
+  if(!data||data.length===0){wrap.innerHTML="<p>暂无文章</p>";return;}
+  data.forEach(item=>{
+    wrap.innerHTML+=`
+    <div style="padding:8px;border:1px solid #eee;margin:6px 0">
+      <b>${item.title}</b>
+      <button class="btn-red" onclick="delArt(${item.id})">删除</button>
+    </div>`;
+  })
+}
+
+async function delArt(id){
+  if(!confirm("确认删除这篇文章？"))return;
+  await supabase.from("articles").delete().eq("id",id);
+  loadArticles();
+}
+
+async function loadAllUser(){
+  const {data}=await supabase.from("user_profile").select("*");
+  const wrap=document.getElementById("userList");
+  wrap.innerHTML="";
+  if(!data||data.length===0){wrap.innerHTML="<p>暂无注册用户</p>";return;}
+  data.forEach(u=>{
+    wrap.innerHTML+=`
+    <div style="padding:10px;border:1px solid #eee;margin:8px 0;">
+      ID:${u.id}｜管理员:${u.is_admin}｜禁言:${u.is_muted}｜封号:${u.is_banned}
+      <button onclick="setMute('${u.id}',${!u.is_muted})">${u.is_muted?"解除禁言":"设置禁言"}</button>
+      <button class="btn-red" onclick="setBan('${u.id}',${!u.is_banned})">${u.is_banned?"解除封号":"封号用户"}</button>
+    </div>`
+  })
+}
+
+async function setMute(uid,val){
+  await supabase.from("user_profile").update({is_muted:val}).eq("id",uid);
+  loadAllUser();
+}
+async function setBan(uid,val){
+  await supabase.from("user_profile").update({is_banned:val}).eq("id",uid);
+  loadAllUser();
+}
+
+async function logout(){
+  await supabase.auth.signOut();
+  window.location.href="index.html";
+}
+
+(async ()=>{
+  const ok=await authCheck();
+  if(ok){
+    switchTab("article");
+  }
+})();
+</script>
+</body>
+</html>
