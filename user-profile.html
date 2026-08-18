@@ -1,29 +1,27 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh‑CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>编辑个人资料｜自我介绍</title>
+<meta charset="UTF‑8">
+<meta name="viewport" content="width=device‑width, initial‑scale=1.0">
+<title>编辑个人资料</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui}
+*{box‑sizing:border‑box;margin:0;padding:0;font‑family:system‑ui}
 body{background:#f3f4f6;padding:24px}
-.container{max-width:700px;margin:0 auto;background:white;padding:28px;border-radius:10px}
-h2{margin-bottom:20px}
-textarea,input{width:100%;padding:11px;border:1px solid #d1d5db;border-radius:7px;margin:8px 0;font-size:15px}
-textarea{min-height:180px}
-button{padding:10px 18px;border:none;border-radius:6px;cursor:pointer;margin:4px}
-.btn-blue{background:#2563eb;color:white}
-.back{margin-bottom:16px;display:inline-block}
+.container{max‑width:700px;margin:0 auto;background:white;padding:28px;border‑radius:10px}
+h2{margin‑bottom:20px}
+textarea{width:100%;padding:11px;border:1px solid #d1d5db;border‑radius:7px;margin:8px 0;font‑size:15px;min‑height:180px}
+button{padding:10px 18px;border:none;border‑radius:6px;cursor:pointer}
+.btn‑blue{background:#2563eb;color:white}
+.back{margin‑bottom:16px;display:inline‑block}
 </style>
 </head>
 <body>
 <div class="container">
 <div class="back"><a href="index.html">← 返回首页</a></div>
-<h2>编辑你的自我介绍</h2>
-<label>个人简介（自我介绍）</label>
-<textarea id="bio" placeholder="在这里写你的自我介绍，爱好、简介等..."></textarea>
-<button class="btn-blue" onclick="saveProfile()">保存个人资料</button>
+<h2>编辑自我介绍</h2>
+<textarea id="bio" placeholder="在这里填写你的个人介绍"></textarea>
+<button class="btn‑blue" onclick="save()">保存资料</button>
 <div id="msg"></div>
 </div>
 
@@ -31,36 +29,25 @@ button{padding:10px 18px;border:none;border-radius:6px;cursor:pointer;margin:4px
 const SUPABASE_URL = "https://scrmlnmmmixstxcmvcyw.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjcm1sbm1tbWl4c3R4Y212Y3l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5NTgzMTcsImV4cCI6MjEwMjUzNDMxN30.oIZ8OYHpii6SdYy1zTlMAF4MHWfFDOJJDdiJp4luH_s";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let uid;
 
-let uid=null;
-
-async function checkLogin(){
+async function check(){
   const {data:{session}}=await supabase.auth.getSession();
-  if(!session){
-    alert("请先登录");
-    window.location.href="login.html";
-    return;
-  }
+  if(!session){location.href="login.html";return;}
   uid=session.user.id;
   const {data}=await supabase.from("user_profile").select("bio").eq("id",uid).single();
-  if(data && data.bio){
-    document.getElementById("bio").value=data.bio;
-  }
+  if(data?.bio) document.getElementById("bio").value=data.bio;
 }
-
-async function saveProfile(){
+async function save(){
   const bio=document.getElementById("bio").value.trim();
-  const {error}=await supabase.from("user_profile")
-    .update({bio:bio})
-    .eq("id",uid);
+  const {error}=await supabase.from("user_profile").update({bio}).eq("id",uid);
   if(error){
-    document.getElementById("msg").innerText="保存失败:"+error.message;
+    document.getElementById("msg").innerText="保存失败："+error.message;
   }else{
-    document.getElementById("msg").innerText="✅自我介绍保存成功！";
+    document.getElementById("msg").innerText="✅保存成功";
   }
 }
-
-checkLogin();
+check();
 </script>
 </body>
 </html>
