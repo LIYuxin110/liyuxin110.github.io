@@ -3,283 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>登录 | liyuxin110</title>
+<title>登录</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-* {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Microsoft Yahei", sans-serif;
-  background-color:#0f172a;
-  color:#cbd5e1;
-  line-height:1.7;
-  min-height:100vh;
-}
-header {
-  background-color:rgba(15,23,42,0.85);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(255,255,255,0.08);
-  position:sticky;
-  top:0;
-  z-index:10;
-}
-.nav-container {
-  max-width:1160px;
-  margin:0 auto;
-  padding:0 24px;
-  height:64px;
-  display:flex;
-  align-items:center;
-  gap:32px;
-}
-.logo {
-  font-size:18px;
-  font-weight:600;
-  color:#ffffff;
-  margin-right:auto;
-}
-.nav-container a {
-  color:#94a3b8;
-  text-decoration:none;
-  font-size:15px;
-  transition:0.25s;
-}
-.nav-container a:hover {
-  color:#38bdf8;
-}
-.auth-wrap{
-  min-height:calc(100vh - 64px);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:40px 20px;
-}
-.auth-card{
-  width:100%;
-  max-width:440px;
-  background:#1e293b;
-  border:1px solid #334155;
-  border-radius:14px;
-  padding:42px 36px;
-  box-shadow:0 8px 30px rgba(0,0,0,0.35);
-}
-.auth-card h2{
-  font-size:26px;
-  color:#f1f5f9;
-  margin-bottom:8px;
-}
-.auth-desc{
-  color:#94a3b8;
-  font-size:15px;
-  margin-bottom:32px;
-}
-.form-item{
-  margin-bottom:22px;
-}
-.form-item label{
-  display:block;
-  font-size:14px;
-  color:#cbd5e1;
-  margin-bottom:8px;
-}
-.input-box{
-  position:relative;
-}
-.form-item input{
-  width:100%;
-  padding:14px 16px;
-  padding-right:44px;
-  background:#0f172a;
-  border:1px solid #475569;
-  border-radius:8px;
-  font-size:16px;
-  color:#e2e8f0;
-  outline:none;
-  transition:0.22s ease;
-}
-.form-item input:focus{
-  border-color:#38bdf8;
-  box-shadow:0 0 0 3px rgba(56,189,248,0.15);
-}
-.form-item.input-error input{
-  border-color:#ef4444;
-}
-.error-text{
-  color:#ef4444;
-  font-size:13px;
-  margin-top:6px;
-  display:none;
-}
-.form-item.input-error .error-text{
-  display:block;
-}
-.pwd-toggle{
-  position:absolute;
-  right:14px;
-  top:50%;
-  transform:translateY(-50%);
-  color:#94a3b8;
-  cursor:pointer;
-  font-size:14px;
-  user-select:none;
-}
-.submit-btn{
-  width:100%;
-  padding:14px;
-  background:#38bdf8;
-  border:none;
-  border-radius:8px;
-  color:#0f172a;
-  font-weight:600;
-  font-size:16px;
-  cursor:pointer;
-  transition:0.22s;
-}
-.submit-btn:hover{
-  background:#0ea5e9;
-}
-.submit-btn:disabled{
-  opacity:0.6;
-  cursor:not-allowed;
-}
-.tip-row{
-  margin-top:20px;
-  text-align:center;
-  font-size:14px;
-  color:#94a3b8;
-}
-.tip-row a{
-  color:#38bdf8;
-  text-decoration:none;
-}
-.toast{
-  position:fixed;
-  top:80px;
-  left:50%;
-  transform:translateX(-50%);
-  padding:12px 24px;
-  border-radius:8px;
-  z-index:999;
-  font-size:15px;
-  display:none;
-}
-.toast.success{
-  background:#10b981;
-  color:white;
-}
-.toast.error{
-  background:#ef4444;
-  color:white;
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui}
+body{background:#f3f4f6;display:flex;align-items:center;justify-content:center;height:100vh}
+.box{background:white;padding:32px;border-radius:10px;width:400px}
+h2{margin-bottom:24px;text-align:center}
+input{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:6px;font-size:15px}
+button{width:100%;padding:12px;background:#2563eb;color:white;border:none;border-radius:6px;margin-top:8px;font-size:15px;cursor:pointer}
+.link{text-align:center;margin-top:12px}
 </style>
 </head>
 <body>
-<header>
-  <div class="nav-container">
-    <div class="logo">liyuxin110</div>
-    <a href="index.html">首页</a>
-    <a href="about.html">关于我</a>
-    <a href="blog.html">博客</a>
-    <a href="c-algo.html">C算法题集</a>
-    <a href="tools.html">小工具</a>
-    <a href="login.html">登录</a>
-    <a href="register.html">注册</a>
-  </div>
-</header>
-<div class="toast" id="toast"></div>
-<div class="auth-wrap">
-  <div class="auth-card">
-    <h2>账号登录</h2>
-    <div class="auth-desc">登录你的 liyuxin110 站点账号</div>
-    <form id="loginForm">
-      <div class="form-item" id="itemEmail">
-        <label>邮箱</label>
-        <div class="input-box">
-          <input type="email" id="emailInput" placeholder="请输入邮箱">
-        </div>
-        <div class="error-text" id="errEmail">请输入合法邮箱地址</div>
-      </div>
-      <div class="form-item" id="itemPwd">
-        <label>密码</label>
-        <div class="input-box">
-          <input type="password" id="pwdInput" placeholder="请输入密码">
-          <span class="pwd-toggle" id="togglePwd">显示</span>
-        </div>
-        <div class="error-text" id="errPwd">密码不能为空</div>
-      </div>
-      <button class="submit-btn" id="submitBtn" type="submit">登录</button>
-    </form>
-    <div class="tip-row">
-      没有账号？<a href="register.html">前往注册</a>
-    </div>
+<div class="box">
+  <h2>账号登录</h2>
+  <input type="email" id="email" placeholder="邮箱">
+  <input type="password" id="pwd" placeholder="密码">
+  <button onclick="doLogin()">登录</button>
+  <div id="msg"></div>
+  <div class="link">
+    <a href="register.html">注册账号</a>｜<a href="index.html">返回首页</a>
   </div>
 </div>
 
-<script type="module">
-import {supabase} from './supabase-config.js';
+<script>
+const SUPABASE_URL = "https://scrmlnmmmixstxcmvcyw.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjcm1sbm1tbWl4c3R4Y212Y3l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5NTgzMTcsImV4cCI6MjEwMjUzNDMxN30.oIZ8OYHpii6SdYy1zTlMAF4MHWfFDOJJDdiJp4luH_s";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const form = document.getElementById("loginForm");
-const emailInput = document.getElementById("emailInput");
-const pwdInput = document.getElementById("pwdInput");
-const submitBtn = document.getElementById("submitBtn");
-const togglePwd = document.getElementById("togglePwd");
-const toast = document.getElementById("toast");
-
-// 密码显示隐藏
-togglePwd.onclick = ()=>{
-  if(pwdInput.type === "password"){
-    pwdInput.type = "text";
-    togglePwd.innerText = "隐藏";
-  }else{
-    pwdInput.type = "password";
-    togglePwd.innerText = "显示";
+async function doLogin(){
+  const email=document.getElementById("email").value.trim();
+  const pwd=document.getElementById("pwd").value;
+  const {data,error}=await supabase.auth.signInWithPassword({email,password:pwd});
+  if(error){
+    document.getElementById("msg").innerText="登录失败："+error.message;
+    return;
   }
-};
-
-function showToast(msg,isOk){
-  toast.innerText = msg;
-  toast.className = "toast " + (isOk?"success":"error");
-  toast.style.display = "block";
-  setTimeout(()=>toast.style.display="none",2500);
+  window.location.href="admin-panel.html";
 }
 
-// 表单提交
-form.onsubmit = async (e)=>{
-  e.preventDefault();
-  let ok = true;
-  document.getElementById("itemEmail").classList.remove("input-error");
-  document.getElementById("itemPwd").classList.remove("input-error");
-
-  const email = emailInput.value.trim();
-  const password = pwdInput.value;
-  const regEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-
-  if(!regEmail.test(email)){
-    document.getElementById("itemEmail").classList.add("input-error");
-    ok=false;
+(async ()=>{
+  const {data:{session}}=await supabase.auth.getSession();
+  if(session){
+    window.location.href="admin-panel.html";
   }
-  if(password.length < 8){
-    document.getElementById("itemPwd").classList.add("input-error");
-    ok=false;
-  }
-  if(!ok) return;
-
-  submitBtn.disabled = true;
-  submitBtn.innerText = "登录中…";
-
-  const {error} = await supabase.auth.signInWithPassword({email,password});
-  submitBtn.disabled = false;
-  submitBtn.innerText = "登录";
-
-  if(error){
-    showToast("登录失败："+error.message,false);
-  }else{
-    showToast("登录成功",true);
-    setTimeout(()=>window.location.href="index.html",800);
-  }
-};
+})();
 </script>
 </body>
 </html>
