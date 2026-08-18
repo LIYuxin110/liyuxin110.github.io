@@ -1,87 +1,114 @@
 <!DOCTYPE html>
-<html lang="zh‑CN">
+<html lang="zh-CN">
 <head>
-<meta charset="UTF‑8">
-<meta name="viewport" content="width=device‑width, initial‑scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>文章详情</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box‑sizing:border‑box;margin:0;padding:0;font‑family:system‑ui}
-body{background:#f3f4f6;padding:22px}
-.container{max‑width:850px;margin:0 auto;background:white;padding:30px;border‑radius:10px}
-.title{font‑size:26px;margin‑bottom:14px}
-.content{line‑height:1.7;font‑size:16px;margin‑bottom:40px;white‑space:pre‑wrap}
-.comment‑area{margin‑top:50px;border‑top:1px solid #ddd;padding‑top:24px}
-.comment‑item{padding:14px;border:1px solid #eee;margin:10px 0;border‑radius:6px}
-textarea{width:100%;padding:10px;border:1px solid #ccc;border‑radius:6px;min‑height:100px}
-button{padding:9px 16px;background:#2563eb;color:white;border:none;border‑radius:6px;cursor:pointer;margin‑top:8px}
-.back{margin‑bottom:20px;display:inline‑block}
+*{margin:0;padding:0;box-sizing:border-box}
+body {font-family:"Microsoft Yahei",system-ui;background:#0f172a;color:#e2e8f0}
+header{background:#1e293b;padding:1rem 4rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0}
+.logo{font-size:22px;font-weight:bold;color:#38bdf8}
+nav a{color:#cbd5e1;text-decoration:none;margin:0 12px}
+nav a:hover{color:#38bdf8}
+.user-bar{display:inline-flex;gap:10px}
+.btn{padding:6px 12px;border-radius:4px;border:none;cursor:pointer}
+.btn-blue{background:#2563eb;color:white}
+.container{max-width:950px;margin:40px auto;padding:0 20px}
+.box{background:#1e293b;padding:28px;border-radius:10px;border:1px solid #334155}
+.title{font-size:28px;color:#ffffff;margin-bottom:18px}
+.content{line-height:1.8;margin-bottom:40px;white-space:pre-wrap}
+.comment-area{margin-top:40px;border-top:1px solid #475569;padding-top:24px}
+.comment-item{padding:14px;background:#0f172a;border-radius:6px;margin:10px 0;border:1px solid #334155}
+textarea{width:100%;background:#0f172a;color:#e2e8f0;border:1px solid #475569;padding:12px;border-radius:6px;min-height:100px}
 </style>
 </head>
 <body>
+<header>
+    <div class="logo">我的网站</div>
+    <nav>
+        <a href="index.html">首页</a>
+        <a href="about.html">关于我</a>
+        <a href="blog.html">博客</a>
+        <a href="projects.html">项目</a>
+        <a href="c-algorithm.html">C算法题集</a>
+        <a href="tools.html">小工具</a>
+        <span class="user-bar" id="userNav"></span>
+    </nav>
+</header>
 <div class="container">
-<div class="back"><a href="blog.html">← 返回博客列表</a></div>
-<h1 class="title" id="title"></h1>
-<div class="content" id="content"></div>
-
-<div class="comment‑area">
-<h3>💬讨论区留言</h3>
-<textarea id="ctext" placeholder="登录后发表留言"></textarea>
-<button onclick="submitComment()">提交留言</button>
-<div id="commentWrap"></div>
+    <div class="box">
+        <h1 class="title" id="artTitle"></h1>
+        <div class="content" id="artContent"></div>
+        <div class="comment-area">
+            <h3>💬评论区</h3>
+            <textarea id="commentInput" placeholder="登录后发表评论"></textarea>
+            <button class="btn btn-blue" onclick="submitComment()">提交评论</button>
+            <div id="commentWrap"></div>
+        </div>
+    </div>
 </div>
-</div>
-
 <script>
 const SUPABASE_URL = "https://scrmlnmmmixstxcmvcyw.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjcm1sbm1tbWl4c3R4Y212Y3l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5NTgzMTcsImV4cCI6MjEwMjUzNDMxN30.oIZ8OYHpii6SdYy1zTlMAF4MHWfFDOJJDdiJp4luH_s";
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 let aid,loginUid=null;
-
-function getParam(k){
-  return new URLSearchParams(location.search).get(k);
-}
+function getUrlParam(k){return new URLSearchParams(location.search).get(k)}
 
 async function init(){
-  aid=getParam("id");
-  if(!aid){location.href="blog.html";return;}
-  const {data:art}=await supabase.from("articles").select("*").eq("id",aid).single();
-  if(!art){location.href="blog.html";return;}
-  document.getElementById("title").innerText=art.title;
-  document.getElementById("content").innerText=art.content;
-  const {data:{session}}=await supabase.auth.getSession();
-  if(session) loginUid=session.user.id;
-  loadComments();
+    aid = getUrlParam("id");
+    if(!aid){location.href="blog.html";return;}
+    const {data:art}=await supabase.from("articles").select("*").eq("id",aid).single();
+    if(!art){location.href="blog.html";return;}
+    document.getElementById("artTitle").innerText=art.title;
+    document.getElementById("artContent").innerText=art.content;
+    const {data:{session}}=await supabase.auth.getSession();
+    if(session) loginUid=session.user.id;
+    loadComments();
 }
-
 async function loadComments(){
-  const {data}=await supabase.from("comments").select("*").eq("article_id",aid).order("created_at",{asc:false});
-  const wrap=document.getElementById("commentWrap");
-  wrap.innerHTML="";
-  if(!data||!data.length){wrap.innerHTML="<p>暂无评论</p>";return;}
-  data.forEach(c=>{
-    wrap.innerHTML+=`
-    <div class="comment‑item">
-      <div>用户ID:${c.user_id||"匿名"}｜${new Date(c.created_at).toLocaleString()}</div>
-      <div style="margin‑top:6px">${escapeHtml(c.content)}</div>
-    </div>
-    `
-  })
+    const {data}=await supabase.from("comments").select("*").eq("article_id",aid).order("created_at",{asc:false});
+    const wrap=document.getElementById("commentWrap");
+    wrap.innerHTML="";
+    if(!data||!data.length){wrap.innerHTML="<p style='margin-top:12px'>暂无评论</p>";return;}
+    data.forEach(c=>{
+        wrap.innerHTML += `
+        <div class="comment-item">
+            <div>用户ID:${c.user_id||"匿名"}｜${new Date(c.created_at).toLocaleString()}</div>
+            <div style="margin-top:6px">${escapeHtml(c.content)}</div>
+        </div>`
+    })
 }
-
 async function submitComment(){
-  if(!loginUid){alert("请登录后留言");location.href="login.html";return;}
-  const txt=document.getElementById("ctext").value.trim();
-  if(!txt){alert("内容不能为空");return;}
-  const {error}=await supabase.from("comments").insert({article_id:aid,user_id:loginUid,content:txt});
-  if(error){alert("提交失败："+error.message);return;}
-  document.getElementById("ctext").value="";
-  loadComments();
+    if(!loginUid){alert("请登录");location.href="login.html";return;}
+    const txt=document.getElementById("commentInput").value.trim();
+    if(!txt){alert("评论不能为空");return;}
+    const {error}=await supabase.from("comments").insert({article_id:aid,user_id:loginUid,content:txt});
+    if(error){alert("提交失败："+error.message);return;}
+    document.getElementById("commentInput").value="";
+    loadComments();
 }
 function escapeHtml(s){
-  if(!s)return"";
-  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    if(!s)return"";
+    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 }
+
+async function renderUserNav(){
+    const {data:{session}}=await supabase.auth.getSession();
+    const dom=document.getElementById("userNav");
+    if(!session){
+        dom.innerHTML=`<a href="login.html"><button class="btn btn-blue">登录</button></a><a href="register.html"><button class="btn">注册</button></a>`;
+    }else{
+        const {data:prof}=await supabase.from("user_profile").select("is_admin").eq("id",session.user.id).single();
+        let html=`<a href="user-profile.html"><button class="btn">个人资料</button></a>`;
+        if(prof?.is_admin) html+=`<a href="admin-panel.html"><button class="btn btn-blue">管理后台</button></a>`;
+        html+=`<button class="btn" onclick="logout()">退出</button>`;
+        dom.innerHTML=html;
+    }
+}
+async function logout(){await supabase.auth.signOut();location.reload()}
+renderUserNav();
 init();
 </script>
 </body>
