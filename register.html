@@ -3,276 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>注册 | liyuxin110</title>
+<title>注册账号</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-* {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Microsoft Yahei", sans-serif;
-  background-color:#0f172a;
-  color:#cbd5e1;
-  line-height:1.7;
-  min-height:100vh;
-}
-header {
-  background-color:rgba(15,23,42,0.85);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(255,255,255,0.08);
-  position:sticky;
-  top:0;
-  z-index:10;
-}
-.nav-container {
-  max-width:1160px;
-  margin:0 auto;
-  padding:0 24px;
-  height:64px;
-  display:flex;
-  align-items:center;
-  gap:32px;
-}
-.logo {
-  font-size:18px;
-  font-weight:600;
-  color:#ffffff;
-  margin-right:auto;
-}
-.nav-container a {
-  color:#94a3b8;
-  text-decoration:none;
-  font-size:15px;
-  transition:0.25s;
-}
-.nav-container a:hover {
-  color:#38bdf8;
-}
-.auth-wrap{
-  min-height:calc(100vh - 64px);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:40px 20px;
-}
-.auth-card{
-  width:100%;
-  max-width:440px;
-  background:#1e293b;
-  border:1px solid #334155;
-  border-radius:14px;
-  padding:42px 36px;
-  box-shadow:0 8px 30px rgba(0,0,0,0.35);
-}
-.auth-card h2{
-  font-size:26px;
-  color:#f1f5f9;
-  margin-bottom:8px;
-}
-.auth-desc{
-  color:#94a3b8;
-  font-size:15px;
-  margin-bottom:32px;
-}
-.form-item{
-  margin-bottom:22px;
-}
-.form-item label{
-  display:block;
-  font-size:14px;
-  color:#cbd5e1;
-  margin-bottom:8px;
-}
-.input-box{
-  position:relative;
-}
-.form-item input{
-  width:100%;
-  padding:14px 16px;
-  padding-right:44px;
-  background:#0f172a;
-  border:1px solid #475569;
-  border-radius:8px;
-  font-size:16px;
-  color:#e2e8f0;
-  outline:none;
-  transition:0.22s ease;
-}
-.form-item input:focus{
-  border-color:#38bdf8;
-  box-shadow:0 0 0 3px rgba(56,189,248,0.15);
-}
-.form-item.input-error input{
-  border-color:#ef4444;
-}
-.error-text{
-  color:#ef4444;
-  font-size:13px;
-  margin-top:6px;
-  display:none;
-}
-.form-item.input-error .error-text{
-  display:block;
-}
-.pwd-toggle{
-  position:absolute;
-  right:14px;
-  top:50%;
-  transform:translateY(-50%);
-  color:#94a3b8;
-  cursor:pointer;
-  font-size:14px;
-  user-select:none;
-}
-.submit-btn{
-  width:100%;
-  padding:14px;
-  background:#38bdf8;
-  border:none;
-  border-radius:8px;
-  color:#0f172a;
-  font-weight:600;
-  font-size:16px;
-  cursor:pointer;
-  transition:0.22s;
-}
-.submit-btn:hover{
-  background:#0ea5e9;
-}
-.submit-btn:disabled{
-  opacity:0.6;
-  cursor:not-allowed;
-}
-.tip-row{
-  margin-top:20px;
-  text-align:center;
-  font-size:14px;
-  color:#94a3b8;
-}
-.tip-row a{
-  color:#38bdf8;
-  text-decoration:none;
-}
-.toast{
-  position:fixed;
-  top:80px;
-  left:50%;
-  transform:translateX(-50%);
-  padding:12px 24px;
-  border-radius:8px;
-  z-index:999;
-  font-size:15px;
-  display:none;
-}
-.toast.success{
-  background:#10b981;
-  color:white;
-}
-.toast.error{
-  background:#ef4444;
-  color:white;
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui}
+body{background:#f3f4f6;display:flex;align-items:center;justify-content:center;height:100vh}
+.box{background:white;padding:32px;border-radius:10px;width:400px}
+h2{margin-bottom:24px;text-align:center}
+input{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:6px;font-size:15px}
+button{width:100%;padding:12px;background:#2563eb;color:white;border:none;border-radius:6px;margin-top:8px;font-size:15px;cursor:pointer}
+.link{text-align:center;margin-top:12px}
 </style>
 </head>
 <body>
-<header>
-  <div class="nav-container">
-    <div class="logo">liyuxin110</div>
-    <a href="index.html">首页</a>
-    <a href="about.html">关于我</a>
-    <a href="blog.html">博客</a>
-    <a href="c-algo.html">C算法题集</a>
-    <a href="tools.html">小工具</a>
-    <a href="login.html">登录</a>
-    <a href="register.html">注册</a>
-  </div>
-</header>
-<div class="toast" id="toast"></div>
-<div class="auth-wrap">
-  <div class="auth-card">
-    <h2>账号注册</h2>
-    <div class="auth-desc">注册站点账号，密码至少8位（字母+数字）</div>
-    <form id="regForm">
-      <div class="form-item" id="itemEmail">
-        <label>邮箱</label>
-        <div class="input-box">
-          <input type="email" id="emailInput" placeholder="输入邮箱">
-        </div>
-        <div class="error-text">邮箱格式不正确</div>
-      </div>
-      <div class="form-item" id="itemPwd">
-        <label>密码</label>
-        <div class="input-box">
-          <input type="password" id="pwdInput" placeholder="至少8位，字母+数字">
-          <span class="pwd-toggle" id="togglePwd">显示</span>
-        </div>
-        <div class="error-text">密码至少8位，包含字母数字</div>
-      </div>
-      <div class="form-item" id="itemPwd2">
-        <label>确认密码</label>
-        <div class="input-box">
-          <input type="password" id="pwd2Input" placeholder="再次输入密码">
-        </div>
-        <div class="error-text">两次密码不一致</div>
-      </div>
-      <button class="submit-btn" id="submitBtn" type="submit">注册</button>
-    </form>
-    <div class="tip-row">
-      已有账号？<a href="login.html">去登录</a>
-    </div>
+<div class="box">
+  <h2>新用户注册</h2>
+  <input type="email" id="email" placeholder="邮箱">
+  <input type="password" id="pwd" placeholder="密码（至少6位）">
+  <button onclick="doRegister()">注册</button>
+  <div id="msg"></div>
+  <div class="link">
+    <a href="login.html">已有账号，去登录</a>｜<a href="index.html">返回首页</a>
   </div>
 </div>
 
-<script type="module">
-import {supabase} from './supabase-config.js';
-const form = document.getElementById("regForm");
-const emailInput = document.getElementById("emailInput");
-const pwdInput = document.getElementById("pwdInput");
-const pwd2Input = document.getElementById("pwd2Input");
-const submitBtn = document.getElementById("submitBtn");
-const togglePwd = document.getElementById("togglePwd");
-const toast = document.getElementById("toast");
+<script>
+const SUPABASE_URL = "https://scrmlnmmmixstxcmvcyw.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjcm1sbm1tbWl4c3R4Y212Y3l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5NTgzMTcsImV4cCI6MjEwMjUzNDMxN30.oIZ8OYHpii6SdYy1zTlMAF4MHWfFDOJJDdiJp4luH_s";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-togglePwd.onclick = ()=>{
-  if(pwdInput.type === "password"){pwdInput.type="text";togglePwd.innerText="隐藏";}
-  else {pwdInput.type="password";togglePwd.innerText="显示";}
-};
-
-function showToast(msg,isOk){
-  toast.innerText=msg;
-  toast.className="toast "+(isOk?"success":"error");
-  toast.style.display="block";
-  setTimeout(()=>toast.style.display="none",2600);
-}
-
-form.onsubmit = async e=>{
-  e.preventDefault();
-  ["itemEmail","itemPwd","itemPwd2"].forEach(id=>document.getElementById(id).classList.remove("input-error"));
-  let pass=true;
-  const email = emailInput.value.trim();
-  const p1 = pwdInput.value;
-  const p2 = pwd2Input.value;
-  const mailReg=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-  const pwdReg=/^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
-
-  if(!mailReg.test(email)){document.getElementById("itemEmail").classList.add("input-error");pass=false;}
-  if(!pwdReg.test(p1)){document.getElementById("itemPwd").classList.add("input-error");pass=false;}
-  if(p1!==p2){document.getElementById("itemPwd2").classList.add("input-error");pass=false;}
-  if(!pass) return;
-
-  submitBtn.disabled=true;
-  submitBtn.innerText="注册提交…";
-  const {data,error}=await supabase.auth.signUp({email,password:p1});
-  submitBtn.disabled=false;
-  submitBtn.innerText="注册";
+async function doRegister(){
+  const email=document.getElementById("email").value.trim();
+  const pwd=document.getElementById("pwd").value;
+  const {data,error}=await supabase.auth.signUp({email,password:pwd});
   if(error){
-    showToast("注册失败："+error.message,false);
-  }else{
-    showToast("注册成功，请去邮箱验证，跳转登录",true);
-    setTimeout(()=>window.location.href="login.html",1200);
+    document.getElementById("msg").innerText="注册失败："+error.message;
+    return;
   }
-};
+  document.getElementById("msg").innerText="✅注册成功，请前往邮箱完成验证，之后登录";
+}
 </script>
 </body>
 </html>
