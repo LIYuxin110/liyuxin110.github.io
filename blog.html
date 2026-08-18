@@ -3,55 +3,46 @@
 <head>
 <meta charset="UTF‑8">
 <meta name="viewport" content="width=device‑width, initial‑scale=1.0">
-<title>博客 | liyuxin110</title>
+<title>博客列表</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{margin:0;padding:0;box‑sizing:border‑box;font‑family:system‑ui}
-body{background:#f3f4f6;padding:24px;max‑width:920px;margin:0 auto}
-h1{margin‑bottom:24px;color:#111827}
-.blog‑item{background:white;padding:20px;border‑radius:10px;margin‑bottom:16px;box‑shadow:0 1px 8px #00000012}
-.blog‑item h2{margin‑bottom:8px;color:#1f2937}
-.desc{color:#4b5563;margin‑bottom:10px}
-.time{font‑size:13px;color:#6b7280;margin‑bottom:12px}
-.content{line‑height:1.7;color:#222}
-.back{margin‑bottom:20px}
-.back a{color:#2563eb}
+*{box‑sizing:border‑box;margin:0;padding:0;font‑family:system‑ui}
+body{background:#f3f4f6;padding:24px}
+.container{max‑width:900px;margin:0 auto}
+.card{background:#fff;padding:18px;border‑radius:8px;margin‑bottom:12px;border:1px solid #e5e7eb}
+.card h3 a{color:#111;text‑decoration:none}
+.card h3 a:hover{color:#2563eb}
+.back{margin‑bottom:20px;display:inline‑block}
 </style>
 </head>
 <body>
+<div class="container">
 <div class="back"><a href="index.html">← 返回首页</a></div>
-<h1>博客文章列表</h1>
-<div id="blogList"></div>
+<h2>📖博客文章列表</h2>
+<div id="articleWrap"></div>
+</div>
 
-<script type="module">
-import {supabase} from "./supabase-config.js";
+<script>
+const SUPABASE_URL = "https://scrmlnmmmixstxcmvcyw.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjcm1sbm1tbWl4c3R4Y212Y3l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5NTgzMTcsImV4cCI6MjEwMjUzNDMxN30.oIZ8OYHpii6SdYy1zTlMAF4MHWfFDOJJDdiJp4luH_s";
+const supabase = window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
-async function loadBlog(){
-    const {data,error}=await supabase
-        .from("articles")
-        .select("*")
-        .order("publish_at",{ascending:false});
-    if(error){
-        document.querySelector("#blogList").innerText="读取博客出错："+error.message;
-        return;
-    }
-    const dom=document.querySelector("#blogList");
-    if(data.length===0){
-        dom.innerText="暂无文章，请前往后台发布第一篇博客";
-        return;
-    }
-    data.forEach(art=>{
-        const div=document.createElement("div");
-        div.className="blog‑item";
-        div.innerHTML=`
-            <h2>${art.title}</h2>
-            <div class="desc">${art.article_desc||""}</div>
-            <div class="time">${new Date(art.publish_at).toLocaleString()}</div>
-            <div class="content">${art.content}</div>
-        `;
-        dom.appendChild(div);
-    })
+async function loadBlogList(){
+  const {data}=await supabase.from("articles").select("*").order("id",{asc:false});
+  const wrap=document.getElementById("articleWrap");
+  if(!data||data.length===0){
+    wrap.innerHTML="<p>还没有文章，请管理员去后台发布</p>";
+    return;
+  }
+  data.forEach(item=>{
+    wrap.innerHTML+=`
+    <div class="card">
+      <h3><a href="blog‑detail.html?id=${item.id}">${item.title}</a></h3>
+    </div>
+    `
+  })
 }
-loadBlog();
+loadBlogList();
 </script>
 </body>
 </html>
