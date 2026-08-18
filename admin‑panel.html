@@ -1,49 +1,65 @@
 <!DOCTYPE html>
-<html lang="zh‑CN">
+<html lang="zh-CN">
 <head>
-<meta charset="UTF‑8">
-<meta name="viewport" content="width=device‑width, initial‑scale=1.0">
-<title>网站管理后台</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>管理后台</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box‑sizing:border‑box;margin:0;padding:0;font‑family:system‑ui}
-body{background:#f3f4f6;padding:20px}
-.container{max‑width:1200px;margin:0 auto}
-.card{background:white;padding:20px;border‑radius:8px;margin:14px 0}
-h2{margin‑bottom:14px}
-input,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid #ccc;border‑radius:6px}
-textarea{min‑height:140px}
-button{padding:8px 14px;border:none;border‑radius:5px;cursor:pointer;margin:3px}
-.btn‑blue{background:#2563eb;color:white}
-.btn‑red{background:#dc2626;color:white}
-.tab{display:flex;gap:8px;margin‑bottom:16px}
-hr{margin:16px 0}
+*{margin:0;padding:0;box-sizing:border-box}
+body {font-family:"Microsoft Yahei",system-ui;background:#0f172a;color:#e2e8f0}
+header{background:#1e293b;padding:1rem 4rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0}
+.logo{font-size:22px;font-weight:bold;color:#38bdf8}
+nav a{color:#cbd5e1;text-decoration:none;margin:0 12px}
+nav a:hover{color:#38bdf8}
+.user-bar{display:inline-flex;gap:10px}
+.btn{padding:6px 12px;border-radius:4px;border:none;cursor:pointer;margin:3px}
+.btn-blue{background:#2563eb;color:white}
+.btn-red{background:#dc2626;color:white}
+.container{max-width:1100px;margin:30px auto;padding:0 20px}
+.box{background:#1e293b;padding:22px;border-radius:10px;border:1px solid #334155;margin-bottom:20px}
+input,textarea{width:100%;background:#0f172a;color:#e2e8f0;border:1px solid #475569;padding:10px;margin:6px 0;border-radius:6px}
+textarea{min-height:140px}
+.tab-bar{display:flex;gap:10px;margin-bottom:16px}
+.user‑item{padding:10px;border:1px solid #475569;border‑radius:6px;margin:8px 0}
 </style>
 </head>
 <body>
+<header>
+    <div class="logo">我的网站</div>
+    <nav>
+        <a href="index.html">首页</a>
+        <a href="about.html">关于我</a>
+        <a href="blog.html">博客</a>
+        <a href="projects.html">项目</a>
+        <a href="c-algorithm.html">C算法题集</a>
+        <a href="tools.html">小工具</a>
+        <span class="user-bar" id="userNav"></span>
+    </nav>
+</header>
 <div class="container">
-  <h1>🔧网站管理后台</h1>
-  <div class="tab">
-    <button class="btn‑blue" onclick="switchTab('art')">博客文章管理</button>
-    <button class="btn‑blue" onclick="switchTab('user')">用户管理(禁言/封号)</button>
-    <button onclick="logout()">退出登录</button>
-  </div>
+    <h1>🔧网站管理后台</h1>
+    <div class="tab-bar">
+        <button class="btn btn-blue" onclick="switchTab('art')">博客管理</button>
+        <button class="btn btn-blue" onclick="switchTab('user')">用户管理</button>
+        <button class="btn" onclick="logout()">退出登录</button>
+    </div>
 
-  <div id="tabArt" class="card">
-    <h3>发布新博客</h3>
-    <input id="artTitle" placeholder="文章标题">
-    <textarea id="artContent" placeholder="文章正文"></textarea>
-    <button class="btn‑blue" onclick="saveArt()">发布文章</button>
-    <div id="artMsg"></div>
-    <hr>
-    <h4>全部文章</h4>
-    <div id="artList"></div>
-  </div>
+    <div id="tabArt" class="box">
+        <h3>发布新文章</h3>
+        <input id="artTitle" placeholder="文章标题">
+        <textarea id="artContent" placeholder="文章正文"></textarea>
+        <button class="btn btn-blue" onclick="publishArticle()">发布文章</button>
+        <div id="artMsg"></div>
+        <hr style="margin:16px 0;border-color:#475569">
+        <h4>全部文章</h4>
+        <div id="artList"></div>
+    </div>
 
-  <div id="tabUser" class="card" style="display:none">
-    <h3>注册用户管理</h3>
-    <div id="userList"></div>
-  </div>
+    <div id="tabUser" class="box" style="display:none">
+        <h3>注册用户管理（禁言/封号）</h3>
+        <div id="userList"></div>
+    </div>
 </div>
 
 <script>
@@ -53,84 +69,99 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 let currentTab="art";
 
 async function authCheck(){
-  const {data:{session}}=await supabase.auth.getSession();
-  if(!session){alert("请登录");location.href="login.html";return false;}
-  const {data:prof}=await supabase.from("user_profile").select("is_admin").eq("id",session.user.id).single();
-  if(!prof||!prof.is_admin){alert("非管理员禁止访问");await supabase.auth.signOut();location.href="index.html";return false;}
-  return true;
+    const {data:{session}}=await supabase.auth.getSession();
+    if(!session){alert("请登录");location.href="login.html";return false;}
+    const {data:prof}=await supabase.from("user_profile").select("is_admin").eq("id",session.user.id).single();
+    if(!prof||!prof.is_admin){alert("非管理员禁止访问");await supabase.auth.signOut();location.href="index.html";return false;}
+    return true;
 }
 
 function switchTab(tab){
-  currentTab=tab;
-  document.getElementById("tabArt").style.display=tab==="art"?"block":"none";
-  document.getElementById("tabUser").style.display=tab==="user"?"block":"none";
-  if(tab==="art") loadArt();
-  if(tab==="user") loadUser();
+    currentTab=tab;
+    document.getElementById("tabArt").style.display = tab==="art"?"block":"none";
+    document.getElementById("tabUser").style.display = tab==="user"?"block":"none";
+    if(tab==="art") loadAllArticles();
+    if(tab==="user") loadAllUsers();
 }
 
-async function saveArt(){
-  const title=document.getElementById("artTitle").value.trim();
-  const content=document.getElementById("artContent").value.trim();
-  if(!title||!content){document.getElementById("artMsg").innerText="标题、内容不能为空";return;}
-  const {error}=await supabase.from("articles").insert([{title,content}]);
-  if(error){
-    document.getElementById("artMsg").innerText="失败："+error.message;
-  }else{
-    document.getElementById("artMsg").innerText="✅发布成功";
-    document.getElementById("artTitle").value="";
-    document.getElementById("artContent").value="";
-    loadArt();
-  }
+async function publishArticle(){
+    const title=document.getElementById("artTitle").value.trim();
+    const content=document.getElementById("artContent").value.trim();
+    if(!title||!content){document.getElementById("artMsg").innerText="标题、内容不能为空";return;}
+    const {error}=await supabase.from("articles").insert([{title,content}]);
+    if(error){
+        document.getElementById("artMsg").innerText="发布失败："+error.message;
+    }else{
+        document.getElementById("artMsg").innerText="✅发布成功";
+        document.getElementById("artTitle").value="";
+        document.getElementById("artContent").value="";
+        loadAllArticles();
+    }
 }
-
-async function loadArt(){
-  const {data}=await supabase.from("articles").select("*").order("id",{asc:false});
-  const wrap=document.getElementById("artList");
-  wrap.innerHTML="";
-  if(!data||!data.length){wrap.innerHTML="<p>暂无文章</p>";return;}
-  data.forEach(i=>{
-    wrap.innerHTML+=`
-    <div style="padding:8px;border:1px solid #eee;margin:6px 0">
-      <b>${i.title}</b>
-      <button class="btn‑red" onclick="delArt(${i.id})">删除</button>
-    </div>
-    `
-  })
+async function loadAllArticles(){
+    const {data}=await supabase.from("articles").select("*").order("id",{asc:false});
+    const wrap=document.getElementById("artList");
+    wrap.innerHTML="";
+    if(!data||!data.length){wrap.innerHTML="<p>暂无文章</p>";return;}
+    data.forEach(i=>{
+        wrap.innerHTML += `
+        <div style="padding:8px;border:1px solid #475569;border‑radius:6px;margin:6px 0">
+            <b>${i.title}</b>
+            <button class="btn btn-red" onclick="delArt(${i.id})">删除</button>
+        </div>`
+    })
 }
 async function delArt(id){
-  if(!confirm("确定删除？"))return;
-  await supabase.from("articles").delete().eq("id",id);
-  loadArt();
+    if(!confirm("确认删除该文章？"))return;
+    await supabase.from("articles").delete().eq("id",id);
+    loadAllArticles();
 }
 
-async function loadUser(){
-  const {data}=await supabase.from("user_profile").select("*");
-  const wrap=document.getElementById("userList");
-  wrap.innerHTML="";
-  if(!data||!data.length){wrap.innerHTML="<p>暂无用户</p>";return;}
-  data.forEach(u=>{
-    wrap.innerHTML+=`
-    <div style="padding:10px;border:1px solid #eee;margin:8px 0">
-      ID:${u.id}｜管理员:${u.is_admin}｜禁言:${u.is_muted}｜封号:${u.is_banned}
-      <button onclick="mute('${u.id}',${!u.is_muted})">${u.is_muted?"解除禁言":"设置禁言"}</button>
-      <button class="btn‑red" onclick="ban('${u.id}',${!u.is_banned})">${u.is_banned?"解除封号":"封号"}</button>
-    </div>
-    `
-  })
+async function loadAllUsers(){
+    const {data}=await supabase.from("user_profile").select("*");
+    const wrap=document.getElementById("userList");
+    wrap.innerHTML="";
+    if(!data||!data.length){wrap.innerHTML="<p>暂无注册用户</p>";return;}
+    data.forEach(u=>{
+        wrap.innerHTML += `
+        <div class="user‑item">
+            ID:${u.id}｜管理员:${u.is_admin}｜禁言:${u.is_muted}｜封号:${u.is_banned}
+            <button class="btn" onclick="muteUser('${u.id}',${!u.is_muted})">${u.is_muted?"解除禁言":"设置禁言"}</button>
+            <button class="btn btn-red" onclick="banUser('${u.id}',${!u.is_banned})">${u.is_banned?"解除封号":"封号"}</button>
+        </div>`
+    })
 }
-async function mute(uid,val){
-  await supabase.from("user_profile").update({is_muted:val}).eq("id",uid);loadUser();
+async function muteUser(uid,val){
+    await supabase.from("user_profile").update({is_muted:val}).eq("id",uid);loadAllUsers();
 }
-async function ban(uid,val){
-  await supabase.from("user_profile").update({is_banned:val}).eq("id",uid);loadUser();
+async function banUser(uid,val){
+    await supabase.from("user_profile").update({is_banned:val}).eq("id",uid);loadAllUsers();
+}
+
+async function renderUserNav(){
+    const {data:{session}}=await supabase.auth.getSession();
+    const dom=document.getElementById("userNav");
+    if(!session){
+        dom.innerHTML=`<a href="login.html"><button class="btn btn-blue">登录</button></a><a href="register.html"><button class="btn">注册</button></a>`;
+    }else{
+        const {data:prof}=await supabase.from("user_profile").select("is_admin").eq("id",session.user.id).single();
+        let html=`<a href="user-profile.html"><button class="btn">个人资料</button></a>`;
+        if(prof?.is_admin) html+=`<a href="admin-panel.html"><button class="btn btn-blue">管理后台</button></a>`;
+        html+=`<button class="btn" onclick="logout()">退出</button>`;
+        dom.innerHTML=html;
+    }
 }
 async function logout(){
-  await supabase.auth.signOut();location.href="index.html";
+    await supabase.auth.signOut();
+    location.href="index.html";
 }
 
 (async ()=>{
-  const ok=await authCheck();
-  if(ok) switchTab("art");
+    const ok = await authCheck();
+    if(ok){
+        renderUserNav();
+        switchTab("art");
+    }
 })();
 </script>
 </body>
