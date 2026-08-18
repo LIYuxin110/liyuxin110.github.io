@@ -1,113 +1,65 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>关于我 | liyuxin110</title>
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Microsoft Yahei", sans-serif;
-  background-color: #0f172a;
-  color: #cbd5e1;
-  line-height: 1.7;
-}
-header {
-  background-color: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-.nav-container {
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 0 24px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  gap: 32px;
-}
-.logo {
-  font-size: 18px;
-  font-weight: 600;
-  color: #ffffff;
-  margin-right: auto;
-}
-.nav-container a {
-  color: #94a3b8;
-  text-decoration: none;
-  font-size: 15px;
-  transition: 0.25s;
-}
-.nav-container a:hover {
-  color: #38bdf8;
-}
-main {
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 60px 24px;
-}
-.page-content {
-  max-width: 720px;
-}
-.page-content h2 {
-  font-size: 28px;
-  color: #f1f5f9;
-  margin-bottom: 20px;
-}
-.page-content p {
-  margin-bottom: 16px;
-  color: #cbd5e1;
-  font-size: 16px;
-}
-.back-link {
-  display: inline-block;
-  margin-top: 24px;
-  color: #38bdf8;
-  text-decoration: none;
-  font-size: 15px;
-}
-.back-link:hover {
-  text-decoration: underline;
-}
-footer {
-  max-width:1160px;
-  margin:0 auto;
-  padding:32px 24px;
-  border-top:1px solid #273449;
-  color:#64748b;
-  font-size:14px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body {font-family:"Microsoft Yahei",system-ui;background:#0f172a;color:#e2e8f0}
+        header{background:#1e293b;padding:1rem 4rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0}
+        .logo{font-size:22px;font-weight:bold;color:#38bdf8}
+        nav a{color:#cbd5e1;text-decoration:none;margin:0 12px}
+        nav a:hover{color:#38bdf8}
+        .user-bar{display:inline-flex;gap:10px}
+        .btn{padding:6px 12px;border-radius:4px;border:none;cursor:pointer}
+        .btn-blue{background:#2563eb;color:white}
+        .container{max-width:900px;margin:50px auto;padding:0 20px}
+        .box{background:#1e293b;padding:32px;border-radius:10px;border:1px solid #334155}
+    </style>
 </head>
 <body>
 <header>
-  <div class="nav-container">
-    <div class="logo">liyuxin110</div>
-    <a href="index.html">首页</a>
-    <a href="about.html">关于我</a>
-    <a href="blog.html">博客</a>
-    <a href="c-algo.html">C算法题集</a>
-    <a href="tools.html">小工具</a>
-    <a href="login.html">登录</a>
-    <a href="register.html">注册</a>
-  </div>
+    <div class="logo">我的网站</div>
+    <nav>
+        <a href="index.html">首页</a>
+        <a href="about.html">关于我</a>
+        <a href="blog.html">博客</a>
+        <a href="projects.html">项目</a>
+        <a href="c-algorithm.html">C算法题集</a>
+        <a href="tools.html">小工具</a>
+        <span class="user-bar" id="userNav"></span>
+    </nav>
 </header>
-<main>
-<div class="page-content">
-  <h2>关于我</h2>
-  <p>我是liyuxin110，一名正在备战CSP‑J/S的学生，主攻C++算法竞赛。</p>
-  <p>平时大量刷题，学习图论、搜索、二分、动态规划等算法知识。搭建这个网站，用来存放自己的学习笔记，复盘错题思路。</p>
-  <p>希望持续积累，不断提升代码能力与逻辑思维。</p>
-  <a href="index.html" class="back-link">← 返回首页</a>
+<div class="container">
+    <div class="box">
+        <h1>👋关于我</h1>
+        <br>
+        <p>一名热爱编程、算法竞赛的学习者，喜欢C++，钻研CSP相关内容。平时记录技术笔记，做一些小项目。</p>
+        <br>
+        <p>可以前往个人资料页编辑自我介绍。</p>
+    </div>
 </div>
-</main>
-<footer>liyuxin110 © 2026</footer>
+<script>
+const SUPABASE_URL = "https://scrmlnmmmixstxcmvcyw.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjcm1sbm1tbWl4c3R4Y212Y3l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5NTgzMTcsImV4cCI6MjEwMjUzNDMxN30.oIZ8OYHpii6SdYy1zTlMAF4MHWfFDOJJDdiJp4luH_s";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+async function renderUserNav(){
+    const {data:{session}}=await supabase.auth.getSession();
+    const dom=document.getElementById("userNav");
+    if(!session){
+        dom.innerHTML=`<a href="login.html"><button class="btn btn-blue">登录</button></a><a href="register.html"><button class="btn">注册</button></a>`;
+    }else{
+        const {data:prof}=await supabase.from("user_profile").select("is_admin").eq("id",session.user.id).single();
+        let html=`<a href="user-profile.html"><button class="btn">个人资料</button></a>`;
+        if(prof?.is_admin) html+=`<a href="admin-panel.html"><button class="btn btn-blue">管理后台</button></a>`;
+        html+=`<button class="btn" onclick="logout()">退出</button>`;
+        dom.innerHTML=html;
+    }
+}
+async function logout(){await supabase.auth.signOut();location.reload()}
+renderUserNav();
+</script>
 </body>
 </html>
