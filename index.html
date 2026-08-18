@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh‑CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF‑8">
+<meta name="viewport" content="width=device‑width, initial‑scale=1.0">
 <title>我的网站</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui}
+*{box‑sizing:border‑box;margin:0;padding:0;font‑family:system‑ui}
 body{background:#f3f4f6}
-nav{background:#1f2937;color:white;padding:16px 24px;display:flex;gap:16px;align-items:center}
-nav a{color:white;text-decoration:none}
-.container{max-width:1100px;margin:40px auto;padding:0 20px}
-.card{background:white;padding:24px;border-radius:8px;margin:12px 0}
-button{padding:9px 14px;border:none;border-radius:6px;cursor:pointer;margin:4px}
-.btn-blue{background:#2563eb;color:white}
+nav{background:#1f2937;color:white;padding:16px 24px;display:flex;gap:16px;align‑items:center}
+nav a{color:white;text‑decoration:none}
+.container{max‑width:1100px;margin:40px auto;padding:0 20px}
+.card{background:white;padding:24px;border‑radius:8px;margin:12px 0}
+button{padding:9px 14px;border:none;border‑radius:6px;cursor:pointer;margin:4px}
+.btn‑blue{background:#2563eb;color:white}
 </style>
 </head>
 <body>
@@ -25,8 +25,8 @@ button{padding:9px 14px;border:none;border-radius:6px;cursor:pointer;margin:4px}
 </nav>
 <div class="container">
 <div class="card">
-  <h1>欢迎来到我的网站</h1>
-  <p>这是完整个人站点，支持注册登录、博客、讨论区、用户管理后台。</p>
+  <h1>欢迎访问我的网站</h1>
+  <p>这是一套带注册登录、后台管理、博客与评论系统的个人站点。</p>
 </div>
 </div>
 
@@ -37,26 +37,21 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 async function renderNav(){
   const {data:{session}} = await supabase.auth.getSession();
-  const navWrap=document.getElementById("navBtn");
+  const dom=document.getElementById("navBtn");
   if(!session){
-    navWrap.innerHTML=`<a href="login.html"><button>登录</button></a>
-    <a href="register.html"><button>注册</button></a>`;
+    dom.innerHTML=`<a href="login.html"><button>登录</button></a><a href="register.html"><button>注册</button></a>`;
   }else{
-    const {data:up}=await supabase.from("user_profile").select("is_admin").eq("id",session.user.id).single();
-    let html=`<a href="user-profile.html"><button class="btn-blue">编辑自我介绍</button></a>`;
-    if(up?.is_admin){
-      html+=`<a href="admin-panel.html"><button class="btn-blue">进入管理后台</button></a>`;
-    }
+    const {data:prof}=await supabase.from("user_profile").select("is_admin").eq("id",session.user.id).single();
+    let html=`<a href="user‑profile.html"><button class="btn‑blue">编辑自我介绍</button></a>`;
+    if(prof?.is_admin) html+=`<a href="admin‑panel.html"><button class="btn‑blue">管理后台</button></a>`;
     html+=`<button onclick="logout()">退出登录</button>`;
-    navWrap.innerHTML=html;
+    dom.innerHTML=html;
   }
 }
-
 async function logout(){
   await supabase.auth.signOut();
-  window.location.reload();
+  location.reload();
 }
-
 renderNav();
 </script>
 </body>
