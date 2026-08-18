@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh‑CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF‑8">
+<meta name="viewport" content="width=device‑width, initial‑scale=1.0">
 <title>登录</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui}
-body{background:#f3f4f6;display:flex;align-items:center;justify-content:center;height:100vh}
-.box{background:white;padding:32px;border-radius:10px;width:400px}
-h2{margin-bottom:24px;text-align:center}
-input{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:6px;font-size:15px}
-button{width:100%;padding:12px;background:#2563eb;color:white;border:none;border-radius:6px;margin-top:8px;font-size:15px;cursor:pointer}
-.link{text-align:center;margin-top:12px}
+*{box‑sizing:border‑box;margin:0;padding:0;font‑family:system‑ui}
+body{background:#f3f4f6;display:flex;align‑items:center;justify‑content:center;height:100vh}
+.box{background:white;padding:32px;border‑radius:10px;width:400px}
+h2{margin‑bottom:24px;text‑align:center}
+input{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border‑radius:6px;font‑size:15px}
+button{width:100%;padding:12px;background:#2563eb;color:white;border:none;border‑radius:6px;margin‑top:8px;font‑size:15px;cursor:pointer}
+.link{text‑align:center;margin‑top:12px}
 </style>
 </head>
 <body>
@@ -40,15 +40,8 @@ async function doLogin(){
     document.getElementById("msg").innerText="登录失败："+error.message;
     return;
   }
-  window.location.href="admin-panel.html";
+  location.href="index.html";
 }
-
-(async ()=>{
-  const {data:{session}}=await supabase.auth.getSession();
-  if(session){
-    window.location.href="admin-panel.html";
-  }
-})();
 </script>
 </body>
 </html>
